@@ -1,0 +1,52 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdftex 2016.2.25)  25 FEB 2016 18:10
+entering extended mode
+**C:/Users/home/Desktop/Sam/comp110-architecture-essay/proposal/comp110_archite
+cture.bib
+
+(C:/Users/home/Desktop/Sam/comp110-architecture-essay/proposal/comp110_architec
+ture.bib
+Overfull \hbox (119.99641pt too wide) in paragraph at lines 19--35
+\tenrm Zurich, Switzer-land, pages = 123--125, numpages = 3, url = http://dl.ac
+m.org.ezproxy.falmouth.ac.uk/citation.cfm?id=2663638.2663664,|
+
+\hbox(7.5+2.5)x469.75499, glue set - 1.0
+.\tenrm Z
+.\tenrm u
+.\tenrm r
+.\tenrm i
+.\tenrm c
+.etc.
+
+
+Overfull \hbox (149.441pt too wide) in paragraph at lines 36--53
+\tenrm lo-ca-tion = Philadel-phia, Penn-syl-va-nia, pages = 44--51, numpages = 
+8, url = http://doi.acm.org.ezproxy.falmouth.ac.uk/10.1145/761849.761856,|
+
+\hbox(7.5+2.5)x469.75499, glue set - 1.0
+.\tenrm l
+.\discretionary replacing 2
+..\tenrm o
+..\tenrm -
+.\tenrm o
+.\kern0.27779
+.\tenrm c
+.etc.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+<to be read again> 
+                   _
+l.76  issue_
+            date = {December 2006},
+? 
+! Emergency stop.
+<inserted text> 
+                $
+<to be read again> 
+                   _
+l.76  issue_
+            date = {December 2006},
+End of file on the terminal!
+
+!  ==> Fatal error occurred, no output PDF file produced!
