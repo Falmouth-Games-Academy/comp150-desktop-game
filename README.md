@@ -78,8 +78,27 @@ saving noise to confirm a successful saved game
 ## 6. Target Audience and Financing 
 
 ##### 6.1 Target Audience
+The age of the audience in mind for Pillars will mostly be adults under the age of 30. They are likely already PC gamers and will probably have a pre-established interest in the turn-based strategy genre as well as an interest in traditional western-developed RPGs. They are likely fans of the popular strategy series Civilization and have probably ventured onto other games in the genre such as Endless Legend. We may also be able to appeal to those who are interested in indie games as a whole.
 
-##### 6.2 Legal Fees
+##### 6.2 Projections, Legal Fees And ROI
+Pillars will require a £150,000 investment for a one year development cycle.
 
-##### 6.3 Projections And ROI 
+The money will be split as follows:
 
+- £105,000 - for the studio's five employees.
+
+- £20,000 - for marketing and branding.
+
+- £5,000 - for equipment and appropriate software.
+
+- £1,000 - for self-publishing, trademarks, legal fees and a maintaining a website.
+
+- £19,000 - for back-up, extra costs and security.
+
+The game will be sold on Steam and itch.io for _£7.99_.
+
+Steam takes 30% of all sales, meaning to break-even we will need to sell 24,506 copies. For itch.io, who take 10% of all sales, we'd need to sell 20,651 copies to break-even.
+
+Ideally we'd like to reach 100,000 sales in one year, with at least 50,000 of those being at full price. Presuming we were able to do that, with 50,000 sales being at the full price of £7.99 and the other 50,000 being at a discounted price of £4.99, we'd make a raw profit of £649,000 and a gross profit (if all sales were on Steam) of £454,300.
+
+On each sale, the investor will receive 20% of their investment meaning it'll take 93,750 sales for the investor to be fully reimbursed for their investment, making ~ £1.60 per sale.
