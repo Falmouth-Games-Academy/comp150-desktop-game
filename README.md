@@ -16,6 +16,8 @@ While playing pillars you will be given 4 Player characters that you must contro
 This game will use a turn based combat system using a 4X grid map layout. Turn order will be decided by a speed stat and attacking enemies will do damage based on your weapons stats and the opponents armour value. reducing an enemies health to zero will defeat them and reward the player with gold they can spend. 
 
 ##### 2.3 Control Scheme 
+The right mouse button will primarily be used for moving units across the grid on their turn and examining other units in battle. the left mouse button will be used to navigate menu's including choosing to attack or defend oncoming attacks. f5 will be the default save key and pressing escape will give us the option to quit the game.
+(to be updated with a diagram)
 
 ##### 2.4 Goals 
 The goal is to defend your village from the wraith of the gods. After successfully defending your village from 5 waves of enemies that increase in difficulty you must fight the invading god and defeat it in order to save the day.
@@ -63,7 +65,15 @@ From here, the player can navigate to the options screen to tweak some settings 
 After the [Play] button has been pressed, the game will then prompt "Easy, Medium and Hard difficulties". Depending on the choice, the game states of the game change as with harder difficulties, the resource gain will be slowed down and the chances of an unexpected attack almost double, making survival more difficult.
 ## 5. Audio
 
-##### 5.1 Sound Effects Table
+##### 5.1 Sound Effects
+The Sound effects in the game will include but not be limited to:
+attacking sound (sword and shield)
+attacking sound (Bow and Arrow)
+status sound (affected by poison)
+status sound (affected by a stun)
+Confirm sound for actions 
+saving noise to confirm a successful saved game
+(To be updated with a Table)
 
 ## 6. Target Audience and Financing 
 
