@@ -34,12 +34,12 @@ The goal is to defend your village from the wraith of the gods. After successful
 ## 3.Environment   
 
 ##### 3.1 Components
-The game will have different type of tile sets which have unique effects when the player is standing on it. These tile sets include desert, swamp, grass, and hill. The tile sets will be procedurally generate within each level of the game.
+The game will have different types of tile sets which have unique effects when the player is standing on it. These tile sets include desert, river, grass, and hill. The tile sets will be procedurally generated within each level of the game.
 ##### 3.2 Terrain Effects 
-Desert- Reduce accuracy   
-Swamp- Movement decrease   
-Grass- Range/vision increase   
-Hill- Accuracy increase against targets on Grass tile 
+Desert- Reduce accuracy (-50%)   
+River- Impassable   
+Grass- Range increase (+25%)   
+Hill- Damage increase against targets on lower tile (+10%) 
 ##### 3.3 Status Effects
 Different weapons can have different effects which can debuff enemies:    
 Poison- Take X amount of damage over X turns    
