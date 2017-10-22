@@ -38,7 +38,7 @@ The game will have different types of tile sets which have unique effects when t
 ##### 3.2 Terrain Effects 
 Desert- Reduce accuracy (-50%)   
 River- Impassable   
-Grass- Range increase (+25%)   
+Grass- Range increase (+25%) (effects archer only)   
 Hill- Damage increase against targets on lower tile (+10%) 
 ##### 3.3 Status Effects
 Different weapons can have different effects which can debuff enemies:    
@@ -60,19 +60,17 @@ The player moves with the WASD keys for directional camera movement as well as a
 The game will operate on a hexagon field. The quest status bar will always be on the player's screen to remind them of the task that needs to be done for progression. Completed tasks will be matched with a tick and the incomplete ones will remain on the screen.
 ##### 4.4 Main Menu
 The main player hub could look something like this:
-
-	
 		
-Pillars
+##<p align="center"> **Pillars** 
 
 
-[Play]
-[Save/Load]
-[Options]
-[Exit]
+#####<p align="center">[Play]
+#####<p align="center">[Save/Load]
+#####<p align="center">[Options]
+#####<p align="center">[Exit]
+##
 
 From here, the player can navigate to the options screen to tweak some settings before heading into the game or save or load a previous game that is being completed. 
-
 
 After the [Play] button has been pressed, the game will then prompt "Easy, Medium and Hard difficulties". Depending on the choice, the game states of the game change as with harder difficulties, the resource gain will be slowed down and making survival more difficult.
 ## 5. Audio
