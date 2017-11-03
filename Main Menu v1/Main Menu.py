@@ -1,9 +1,15 @@
+
 ## Importing pygame and initializing
 import pygame
 pygame.init()
 
 
 ##Setting values, variables for the images with proper scaling as well as blitting the main menu
+
+import pygame
+pygame.init()
+
+
 x = y = 0
 window = pygame.display.set_mode((800, 600))
 mainmenuimg = pygame.image.load('pillarsmenuscreen.jpg')
@@ -23,7 +29,26 @@ while running:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 running = False
             elif event.type == pygame.MOUSEMOTION: ## Tracks mouse motion with co-ordinates
+
+running = True
+while running:
+    for event in pygame.event.get():
+            if event.type == pygame.K_ESCAPE:
+                pygame.quit()
+                running = False
+            elif event.type == pygame.MOUSEMOTION:
+
                 print "mouse at (%d, %d)" % event.pos
             if event.type == pygame.MOUSEBUTTONDOWN:
                 window.blit(controlsimg, (0,0))
                 pygame.display.flip()
+
+
+
+
+
+
+
+
+
+>>>>>>> fc2142053cf07a64f6c986c31a72dd6b1b8ea304
