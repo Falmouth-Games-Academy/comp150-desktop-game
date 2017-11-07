@@ -1,2 +1,2 @@
-# comp150-desktop-game
-A desktop game made collaboratively using Python and PyGame.
+# VisionInTheDark
+Repository for the development of our game Vision In The Dark.
