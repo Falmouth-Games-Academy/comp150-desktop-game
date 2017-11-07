@@ -29,26 +29,8 @@ while running:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 running = False
             elif event.type == pygame.MOUSEMOTION: ## Tracks mouse motion with co-ordinates
-
-running = True
-while running:
-    for event in pygame.event.get():
-            if event.type == pygame.K_ESCAPE:
-                pygame.quit()
-                running = False
-            elif event.type == pygame.MOUSEMOTION:
-
                 print "mouse at (%d, %d)" % event.pos
             if event.type == pygame.MOUSEBUTTONDOWN:
                 window.blit(controlsimg, (0,0))
                 pygame.display.flip()
 
-
-
-
-
-
-
-
-
->>>>>>> fc2142053cf07a64f6c986c31a72dd6b1b8ea304
