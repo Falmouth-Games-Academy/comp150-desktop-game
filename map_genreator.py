@@ -57,7 +57,7 @@ def generate_a_map():
     for row_num, row_list in enumerate(map_matrix):
         for tile_num in enumerate(row_list):
             floor = Floor(pos_x, pos_y)
-            player_tile = Player_spawn_tile(pos_x, pos_y)
+            player_tile = PlayerSpawnTile(pos_x, pos_y)
 
             if tile_num[1] == 1:
                 generate_a_map.wall_pos = (pos_x, pos_y)
@@ -72,7 +72,7 @@ def generate_a_map():
 
             elif tile_num[1] == 3:
                 generate_a_map.grav_well_pos = (pos_x, pos_y)
-                grav_well = Grav_Well(generate_a_map.grav_well_pos)
+                grav_well = GravWell(generate_a_map.grav_well_pos)
                 grav_well.render(map_image)
                 generate_a_map.list_of_grav_well_pos.append(generate_a_map.grav_well_pos)
                 grav_well_list.append(grav_well)

@@ -5,7 +5,7 @@ from map_genreator import *
 from vision_mechanic import *
 
 # initiate pygame
-#pygame.init()
+pygame.init()
 
 # limiting the FPS with this fps clock
 FPS = 60
@@ -15,9 +15,7 @@ generate_a_map()
 player = Player(generate_a_map.player_spawn_pos)
 laser = Laser((128, 64))
 toggle_state = False
-
-
-# game while loop
+global running
 running = True
 while running:
     pressed_keys = pygame.key.get_pressed()
