@@ -7,9 +7,11 @@ clock = pygame.time.Clock()
 class Player(pygame.sprite.Sprite):
     speed_limit = 5
     milliseconds = 100
-
+    dead = False
     def __init__(self, (current_pos_x, current_pos_y)):
         pygame.sprite.Sprite.__init__(self)
+
+        self.dead = False
 
         self.speed_h = 0
         self.speed_v = 0
@@ -39,12 +41,19 @@ class Player(pygame.sprite.Sprite):
 
     def render(self, screen):
         player_image = pygame.image.load('spr_player.png').convert_alpha()
-        screen.blit(player_image, (self.pos.x, self.pos.y))
+        player_image_dead = pygame.image.load('spr_player_dead.png').convert_alpha()
+        #screen.blit(player_image, (self.pos.x, self.pos.y))
         self.player_image = pygame.Surface([32, 32])
         self.rect = self.player_image.get_rect()
         self.rect.center = (self.pos.x + 26, self.pos.y + 26)
+        if self.dead == True:
 
+            screen.blit(player_image_dead, (self.pos.x, self.pos.y))
+        else:
+
+            screen.blit(player_image, (self.pos.x, self.pos.y))
     def player_movement(self, wall, grav_well):
+
 
         pressed_keys = pygame.key.get_pressed()
 
@@ -100,6 +109,10 @@ class Player(pygame.sprite.Sprite):
         self.pos.x += self.speed_h
         self.pos.y += self.speed_v
 
+        if self.dead == True:
+            self.speed_h = 0
+            self.speed_v = 0
+            self.increase = 0
     '''Wall collision function'''
 
     def collide_wall(self, wall_list):
@@ -117,12 +130,16 @@ class Player(pygame.sprite.Sprite):
 
                 if self.speed_h > 4.0:
                     print "DEAD"  # can replace with explosion animation sound etc and level restart
+                    self.player_death()
                 if self.speed_h < -4.0:
                     print "DEAD"
+                    self.player_death()
                 if self.speed_v > 4.0:
                     print "DEAD"
+                    self.player_death()
                 if self.speed_v < -4.0:
                     print "DEAD"
+                    self.player_death()
 
                 # bounces player off of wall when colliding
                 if self.rect.x < wall.rect.x:
@@ -136,6 +153,20 @@ class Player(pygame.sprite.Sprite):
 
                 elif self.rect.y > wall.rect.y:
                     self.speed_v = 0.5
+
+                if self.speed_h > 4.0:
+                    print "DEAD"  # can replace with explosion animation sound etc and level restart
+                    Player.player_death(self)
+                if self.speed_h < -4.0:
+                    print "DEAD"
+                    Player.player_death(self)
+                if self.speed_v > 4.0:
+                    print "DEAD"
+                    Player.player_death(self)
+                if self.speed_v < -4.0:
+                    print "DEAD"
+                    Player.player_death(self)
+
 
     '''Gravity Well collision function'''
 
@@ -158,3 +189,10 @@ class Player(pygame.sprite.Sprite):
                     self.speed_v = 0.5
                 if self.speed_v < 0:
                     self.speed_v = -0.5
+
+
+    def player_death(self):
+        self.dead = True
+        self.speed_h = 0
+        self.speed_v = 0
+
