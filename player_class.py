@@ -7,6 +7,7 @@ clock = pygame.time.Clock()
 class Player(pygame.sprite.Sprite):
     speed_limit = 5
     milliseconds = 100
+    milliseconds_boost = 500
     dead = False
     def __init__(self, (current_pos_x, current_pos_y)):
         pygame.sprite.Sprite.__init__(self)
@@ -15,28 +16,33 @@ class Player(pygame.sprite.Sprite):
 
         self.speed_h = 0
         self.speed_v = 0
-        self.increase = 0.5
+        self.increase = 0.1
+        #self.boost = 0
         self.pos = Vector2(current_pos_x, current_pos_y)
 
         self.time_elapsed_since_last_action_up = 0
         self.time_elapsed_since_last_action_down = 0
         self.time_elapsed_since_last_action_left = 0
         self.time_elapsed_since_last_action_right = 0
+        self.time_elapsed_since_last_action_boost = 0
 
         self.clock_up = pygame.time.Clock()
         self.clock_down = pygame.time.Clock()
         self.clock_left = pygame.time.Clock()
         self.clock_right = pygame.time.Clock()
+        self.clock_boost = pygame.time.Clock()
 
         self.dt_up = self.clock_up.tick()
         self.dt_down = self.clock_down.tick()
         self.dt_left = self.clock_left.tick()
         self.dt_right = self.clock_right.tick()
+        self.dt_boost = self.clock_boost.tick()
 
         self.time_elapsed_since_last_action_up += self.dt_up
         self.time_elapsed_since_last_action_down += self.dt_down
         self.time_elapsed_since_last_action_left += self.dt_left
         self.time_elapsed_since_last_action_right += self.dt_right
+        self.time_elapsed_since_last_action_boost += self.dt_boost
 
 
     def render(self, screen):
@@ -61,11 +67,15 @@ class Player(pygame.sprite.Sprite):
         self.dt_down = self.clock_down.tick()
         self.dt_left = self.clock_left.tick()
         self.dt_right = self.clock_right.tick()
+        self.dt_boost = self.clock_boost.tick()
 
         self.time_elapsed_since_last_action_up += self.dt_up
         self.time_elapsed_since_last_action_down += self.dt_down
         self.time_elapsed_since_last_action_left += self.dt_left
         self.time_elapsed_since_last_action_right += self.dt_right
+        self.time_elapsed_since_last_action_boost += self.dt_boost
+
+
 
         # movement up
         # clocks limit the number of events that take place when keys are pressed
@@ -75,14 +85,19 @@ class Player(pygame.sprite.Sprite):
                 # reset clock
                 self.time_elapsed_since_last_action_up = 0
                 # set an upward speed limit
+                if (pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]):
+                    self.speed_v -= self.boost
                 if self.speed_v <= - self.speed_limit:
                     self.speed_v = - self.speed_limit
+
 
         # movement down
         if self.time_elapsed_since_last_action_down > self.milliseconds:
             if pressed_keys[K_s] or pressed_keys[K_DOWN]:
                 self.speed_v += self.increase
                 self.time_elapsed_since_last_action_down = 0
+                if pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]:
+                    self.speed_v += self.boost
                 if self.speed_v >= self.speed_limit:
                     self.speed_v = self.speed_limit
 
@@ -91,6 +106,8 @@ class Player(pygame.sprite.Sprite):
             if pressed_keys[K_a] or pressed_keys[K_LEFT]:
                 self.speed_h -= self.increase
                 self.time_elapsed_since_last_action_left = 0
+                if pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]:
+                    self.speed_h -= self.boost
                 if self.speed_h <= - self.speed_limit:
                     self.speed_h = - self.speed_limit
 
@@ -99,6 +116,8 @@ class Player(pygame.sprite.Sprite):
             if pressed_keys[K_d] or pressed_keys[K_RIGHT]:
                 self.speed_h += self.increase
                 self.time_elapsed_since_last_action_right = 0
+                if pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]:
+                    self.speed_h += self.boost
                 if self.speed_h >= self.speed_limit:
                     self.speed_h = self.speed_limit
 
@@ -108,11 +127,25 @@ class Player(pygame.sprite.Sprite):
         # initialize player movement
         self.pos.x += self.speed_h
         self.pos.y += self.speed_v
+        print self.speed_h
+        print self.speed_v
+
+        if self.time_elapsed_since_last_action_boost > self.milliseconds_boost:
+            self.boost = 1.5
+            print 'boost!!!!!!!!!'
+            #self.time_elapsed_since_last_action_boost = 0
+            if (pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]) and (pressed_keys[K_w] or pressed_keys[K_s] or pressed_keys[K_a] or pressed_keys[K_d]):
+                self.time_elapsed_since_last_action_boost = 0
+                self.boost = 0
+
 
         if self.dead == True:
             self.speed_h = 0
             self.speed_v = 0
             self.increase = 0
+            self.boost = 0
+
+
     '''Wall collision function'''
 
     def collide_wall(self, wall_list):
@@ -129,17 +162,18 @@ class Player(pygame.sprite.Sprite):
                 print self.speed_v
 
                 if self.speed_h > 4.0:
-                    print "DEAD"  # can replace with explosion animation sound etc and level restart
-                    self.player_death()
+                    # can replace with explosion animation sound etc and level restart
+                    #self.player_death()
+                    print "DEAD"
                 if self.speed_h < -4.0:
                     print "DEAD"
-                    self.player_death()
+                    #self.player_death()
                 if self.speed_v > 4.0:
                     print "DEAD"
-                    self.player_death()
+                    #self.player_death()
                 if self.speed_v < -4.0:
                     print "DEAD"
-                    self.player_death()
+                    #self.player_death()
 
                 # bounces player off of wall when colliding
                 if self.rect.x < wall.rect.x:
@@ -154,18 +188,7 @@ class Player(pygame.sprite.Sprite):
                 elif self.rect.y > wall.rect.y:
                     self.speed_v = 0.5
 
-                if self.speed_h > 4.0:
-                    print "DEAD"  # can replace with explosion animation sound etc and level restart
-                    Player.player_death(self)
-                if self.speed_h < -4.0:
-                    print "DEAD"
-                    Player.player_death(self)
-                if self.speed_v > 4.0:
-                    print "DEAD"
-                    Player.player_death(self)
-                if self.speed_v < -4.0:
-                    print "DEAD"
-                    Player.player_death(self)
+
 
 
     '''Gravity Well collision function'''
@@ -193,6 +216,5 @@ class Player(pygame.sprite.Sprite):
 
     def player_death(self):
         self.dead = True
-        self.speed_h = 0
-        self.speed_v = 0
+
 

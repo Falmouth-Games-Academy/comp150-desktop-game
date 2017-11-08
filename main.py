@@ -15,7 +15,8 @@ generate_a_map()
 player = Player(generate_a_map.player_spawn_pos)
 laser = Laser((128, 64))
 toggle_state = False
-global running
+
+
 # game while loop
 running = True
 while running:
