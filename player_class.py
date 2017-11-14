@@ -7,7 +7,7 @@ clock = pygame.time.Clock()
 class Player(pygame.sprite.Sprite):
     speed_limit = 5
     milliseconds = 100
-    milliseconds_boost = 500
+    milliseconds_boost = 1000
     dead = False
 
     def __init__(self, (current_pos_x, current_pos_y)):
@@ -85,10 +85,10 @@ class Player(pygame.sprite.Sprite):
                 # reset clock
                 self.time_elapsed_since_last_action_up = 0
                 # set an upward speed limit
-                if (pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]):
-                    self.speed_v -= self.boost
-                if self.speed_v <= - self.speed_limit:
-                    self.speed_v = - self.speed_limit
+        if (pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]) and (pressed_keys[K_w] or pressed_keys[K_UP]):
+            self.speed_v -= self.boost
+        if self.speed_v <= - self.speed_limit:
+            self.speed_v = - self.speed_limit
 
 
         # movement down
@@ -96,30 +96,30 @@ class Player(pygame.sprite.Sprite):
             if pressed_keys[K_s] or pressed_keys[K_DOWN]:
                 self.speed_v += self.increase
                 self.time_elapsed_since_last_action_down = 0
-                if pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]:
-                    self.speed_v += self.boost
-                if self.speed_v >= self.speed_limit:
-                    self.speed_v = self.speed_limit
+        if (pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]) and (pressed_keys[K_s] or pressed_keys[K_DOWN]):
+            self.speed_v += self.boost
+        if self.speed_v >= self.speed_limit:
+            self.speed_v = self.speed_limit
 
         # movement left
         if self.time_elapsed_since_last_action_left > self.milliseconds:
             if pressed_keys[K_a] or pressed_keys[K_LEFT]:
                 self.speed_h -= self.increase
                 self.time_elapsed_since_last_action_left = 0
-                if pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]:
-                    self.speed_h -= self.boost
-                if self.speed_h <= - self.speed_limit:
-                    self.speed_h = - self.speed_limit
+        if (pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]) and (pressed_keys[K_a] or pressed_keys[K_LEFT]):
+            self.speed_h -= self.boost
+        if self.speed_h <= - self.speed_limit:
+            self.speed_h = - self.speed_limit
 
         # movement right
         if self.time_elapsed_since_last_action_right > self.milliseconds:
             if pressed_keys[K_d] or pressed_keys[K_RIGHT]:
                 self.speed_h += self.increase
                 self.time_elapsed_since_last_action_right = 0
-                if pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]:
-                    self.speed_h += self.boost
-                if self.speed_h >= self.speed_limit:
-                    self.speed_h = self.speed_limit
+        if (pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]) and (pressed_keys[K_d] or pressed_keys[K_RIGHT]):
+            self.speed_h += self.boost
+        if self.speed_h >= self.speed_limit:
+            self.speed_h = self.speed_limit
 
         # put collision func before player movement initialisation
         Player.collide_wall(self, wall)
@@ -131,7 +131,7 @@ class Player(pygame.sprite.Sprite):
         print self.speed_v
 
         if self.time_elapsed_since_last_action_boost > self.milliseconds_boost:
-            self.boost = 1.5
+            self.boost = 2
             print 'boost!!!!!!!!!'
             #self.time_elapsed_since_last_action_boost = 0
             if (pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]) and (pressed_keys[K_w] or pressed_keys[K_s] or pressed_keys[K_a] or pressed_keys[K_d]):
@@ -200,7 +200,7 @@ class Player(pygame.sprite.Sprite):
         for grav_well in grav_well_list:
             if collision_rect.colliderect(grav_well.rect):
                 # slows the players horizontal speed when moving through the tile
-                if self.speed_h > 0:
+                '''if self.speed_h > 0:
                     self.speed_h = 0.5
                 if self.speed_h < 0:
                     self.speed_h = -0.5
@@ -208,7 +208,8 @@ class Player(pygame.sprite.Sprite):
                 if self.speed_v > 0:
                     self.speed_v = 0.5
                 if self.speed_v < 0:
-                    self.speed_v = -0.5
+                    self.speed_v = -0.5'''
+
 
     def player_death(self):
         self.dead = True
