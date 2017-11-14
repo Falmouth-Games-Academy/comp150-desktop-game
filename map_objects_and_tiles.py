@@ -1,5 +1,5 @@
 import pygame
-
+from player_class import *
 Vector2 = pygame.math.Vector2
 
 
@@ -72,26 +72,27 @@ class Laser(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (self.pos.x + 4, self.pos.y + 64)
 
-        self.i0 = pygame.image.load('map_tiles/laser_tile_on.png')
-        self.i1 = pygame.image.load('map_tiles/laser_tile_off.png')
-        self.timeTarget = 100
-        self.timeNum = 0
-        self.currentImage = 0
+        self.image_0 = pygame.image.load('map_tiles/laser_tile_on.png')
+        self.image_1 = pygame.image.load('map_tiles/laser_tile_off.png')
+        self.time_target = 100
+        self.time_num = 0
+        self.current_image = 0
 
     def update(self, screen):
-        self.timeNum += 1
-        if (self.timeNum == self.timeTarget):
-            if (self.currentImage == 0):
-                self.currentImage += 1
+        self.time_num += 1
+        if (self.time_num == self.time_target):
+            if (self.current_image == 0):
+                self.current_image += 1
 
             else:
-                self.currentImage = 0
-            self.timeNum = 0
+                self.current_image = 0
+            self.time_num = 0
         self.render(screen)
 
 
     def render(self, screen):
-        if (self.currentImage == 0):
-            screen.blit(self.i0, (self.pos.x, self.pos.y))
+
+        if (self.current_image == 0):
+            screen.blit(self.image_0, (self.pos.x, self.pos.y))
         else:
-            screen.blit(self.i1, (self.pos.x, self.pos.y))
+            screen.blit(self.image_1, (self.pos.x, self.pos.y))

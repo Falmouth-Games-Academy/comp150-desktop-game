@@ -59,7 +59,7 @@ class Player(pygame.sprite.Sprite):
 
             screen.blit(player_image, (self.pos.x, self.pos.y))
 
-    def player_movement(self, wall, grav_well):
+    def player_movement(self, wall, grav_well, laser):
 
         pressed_keys = pygame.key.get_pressed()
 
@@ -124,6 +124,7 @@ class Player(pygame.sprite.Sprite):
         # put collision func before player movement initialisation
         Player.collide_wall(self, wall)
         Player.collide_grav_well(self, grav_well)
+        Player.collide_laser(self, laser)
         # initialize player movement
         self.pos.x += self.speed_h
         self.pos.y += self.speed_v
@@ -209,6 +210,18 @@ class Player(pygame.sprite.Sprite):
                     self.speed_v = 0.5
                 if self.speed_v < 0:
                     self.speed_v = -0.5'''
+
+    def collide_laser(self, laser_list):
+        # creates a temporary rect that moves where the player moves
+        collision_rect = self.rect
+        collision_rect.left += self.speed_h
+        collision_rect.right += self.speed_h
+        collision_rect.top += self.speed_v
+        collision_rect.bottom += self.speed_v
+        for laser in laser_list:
+            if collision_rect.colliderect(laser.rect):
+                if laser.current_image == 0:
+                    self.player_death()
 
 
     def player_death(self):
