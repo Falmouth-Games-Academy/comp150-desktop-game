@@ -44,6 +44,9 @@ window.blit(button2, ((440, 322), (440, 370)))
 window.blit(button3, ((440, 400), (440, 440)))
 pygame.display.flip()
 
+control_shown = False
+map_generated = False
+
 while not done:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
