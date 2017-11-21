@@ -50,24 +50,26 @@ class Player(pygame.sprite.Sprite):
         self.time_elapsed_since_last_action_boost += self.dt_boost
     # code for rendering the player
 
+        self.player_image = pygame.image.load('spr_player.png').convert_alpha()
+        self.player_image_dead = pygame.image.load('spr_player_dead.png').convert_alpha()
+        self.boost_image = pygame.image.load('boost.png').convert_alpha()
+        self.player_image_rect = pygame.Surface([32, 32])
+        
+
+
     def render(self, screen):
-        player_image = pygame.image.load('spr_player.png').convert_alpha()
-        player_image_dead = pygame.image.load('spr_player_dead.png').convert_alpha()
-        boost_image = pygame.image.load('boost.png').convert_alpha()
-        # screen.blit(player_image, (self.pos.x, self.pos.y))
-        self.player_image = pygame.Surface([32, 32])
-        self.rect = self.player_image.get_rect()
+        self.rect = self.player_image_rect.get_rect()
         self.rect.center = (self.pos.x + 26, self.pos.y + 26)
         # boost UI element
-        if self.boost:
-            screen.blit(boost_image, (screen_width / 2 , screen_height - 64))
+        if self.boost == True:
+            screen.blit(self.boost_image, (screen_width / 2 , screen_height - 64))
 
         if self.dead:
 
-            screen.blit(player_image_dead, (self.pos.x, self.pos.y))
+            screen.blit(self.player_image_dead, (self.pos.x, self.pos.y))
         else:
 
-            screen.blit(player_image, (self.pos.x, self.pos.y))
+            screen.blit(self.player_image, (self.pos.x, self.pos.y))
 
     def vision_mechanic(self):
         vision_radius = 200
@@ -148,9 +150,8 @@ class Player(pygame.sprite.Sprite):
         # initialize player movement
         self.pos.x += self.speed_h
         self.pos.y += self.speed_v
-        print self.speed_h
-        print self.speed_v
 
+        # boost mechanic
         if self.time_elapsed_since_last_action_boost > self.milliseconds_boost:
             self.boost = 2
             self.boost = True
@@ -160,6 +161,7 @@ class Player(pygame.sprite.Sprite):
                 self.boost = 0
 
     '''Wall collision function'''
+
     def collide_wall(self, wall_list):
         # creates a temporary rect that moves where the player moves
         collision_rect = self.rect
@@ -169,10 +171,6 @@ class Player(pygame.sprite.Sprite):
         collision_rect.bottom += self.speed_v
         for wall in wall_list:
             if collision_rect.colliderect(wall.rect):
-                # print "collided!"
-                print self.speed_h
-                print self.speed_v
-
                 if self.speed_h > 4.0:
                     # can replace with explosion animation sound etc and level restart
                     self.player_death()
@@ -211,16 +209,11 @@ class Player(pygame.sprite.Sprite):
         collision_rect.bottom += self.speed_v
         for grav_well in grav_well_list:
             if collision_rect.colliderect(grav_well.rect):
-                # slows the players horizontal speed when moving through the tile
-                '''if self.speed_h > 0:
-                    self.speed_h = 0.5
-                if self.speed_h < 0:
-                    self.speed_h = -0.5
-                # slows the players vertical speed when moving through the tile
-                if self.speed_v > 0:
-                    self.speed_v = 0.5
-                if self.speed_v < 0:
-                    self.speed_v = -0.5'''
+                self.speed_limit = 0.5
+            else:
+                self.speed_limit = 5.0
+
+    '''Laser collision function'''
 
     def collide_laser(self, laser_list):
         # creates a temporary rect that moves where the player moves
