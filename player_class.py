@@ -50,16 +50,11 @@ class Player(pygame.sprite.Sprite):
         self.player_image_dead = pygame.image.load('spr_player_dead.png').convert_alpha()
         self.boost_image = pygame.image.load('boost.png').convert_alpha()
         self.player_image_rect = pygame.Surface([32, 32])
-        #self.rect = self.player_image_rect.get_rect()
-        #self.rect.center = (self.pos.x + 26, self.pos.y + 26)
+        
 
 
     def render(self, screen):
-        #player_image = pygame.image.load('spr_player.png').convert_alpha()
-        #player_image_dead = pygame.image.load('spr_player_dead.png').convert_alpha()
-        #boost_image = pygame.image.load('boost.png').convert_alpha()
-        #screen.blit(player_image, (self.pos.x, self.pos.y))
-        #self.player_image = pygame.Surface([32, 32])
+
         self.rect = self.player_image_rect.get_rect()
         self.rect.center = (self.pos.x + 26, self.pos.y + 26)
         # boost UI element
