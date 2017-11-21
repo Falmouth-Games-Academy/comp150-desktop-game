@@ -2,7 +2,7 @@ import pygame
 from screen_settings import *
 from player_class import *
 from map_genreator import *
-from restart import *
+#from restart import *
 # initiate pygame
 pygame.init()
 
