@@ -43,6 +43,7 @@ window.blit(button1, ((440, 250), (440, 380)))
 window.blit(button2, ((440, 322), (440, 370)))
 window.blit(button3, ((440, 400), (440, 440)))
 pygame.display.flip()
+clock = pygame.time.clock()
 
 while not done:
     for event in pygame.event.get():
