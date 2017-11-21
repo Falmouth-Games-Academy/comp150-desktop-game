@@ -26,6 +26,8 @@ screen = pygame.display.set_mode((MapWidth, MapLength))
 
 done = False
 
+clock = pygame.time.clock()
+
 
 def tiles():
     for x in range(0,MapWidth, TileSize):
@@ -42,3 +44,4 @@ while not done:
             done = True
 
     pygame.display.update()
+    clock.tick(60)
