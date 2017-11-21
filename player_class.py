@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import *
+from screen_settings import *
 
 Vector2 = pygame.math.Vector2
 clock = pygame.time.Clock()
@@ -7,7 +8,7 @@ clock = pygame.time.Clock()
 class Player(pygame.sprite.Sprite):
     speed_limit = 5
     milliseconds = 100
-    milliseconds_boost = 1000
+    milliseconds_boost = 2000
     dead = False
 
     def __init__(self, (current_pos_x, current_pos_y)):
@@ -18,7 +19,7 @@ class Player(pygame.sprite.Sprite):
         self.speed_h = 0
         self.speed_v = 0
         self.increase = 0.1
-        #self.boost = 0
+        self.boost = False
         self.pos = Vector2(current_pos_x, current_pos_y)
 
         self.time_elapsed_since_last_action_up = 0
@@ -48,10 +49,15 @@ class Player(pygame.sprite.Sprite):
     def render(self, screen):
         player_image = pygame.image.load('spr_player.png').convert_alpha()
         player_image_dead = pygame.image.load('spr_player_dead.png').convert_alpha()
+        boost_image = pygame.image.load('boost.png').convert_alpha()
         #screen.blit(player_image, (self.pos.x, self.pos.y))
         self.player_image = pygame.Surface([32, 32])
         self.rect = self.player_image.get_rect()
         self.rect.center = (self.pos.x + 26, self.pos.y + 26)
+        # boost UI element
+        if self.boost == True:
+            screen.blit(boost_image, (screen_width / 2 , screen_height - 64))
+
         if self.dead == True:
 
             screen.blit(player_image_dead, (self.pos.x, self.pos.y))
@@ -59,7 +65,7 @@ class Player(pygame.sprite.Sprite):
 
             screen.blit(player_image, (self.pos.x, self.pos.y))
 
-    def player_movement(self, wall, grav_well):
+    def player_movement(self, wall, grav_well, laser):
 
         pressed_keys = pygame.key.get_pressed()
 
@@ -124,6 +130,7 @@ class Player(pygame.sprite.Sprite):
         # put collision func before player movement initialisation
         Player.collide_wall(self, wall)
         Player.collide_grav_well(self, grav_well)
+        Player.collide_laser(self, laser)
         # initialize player movement
         self.pos.x += self.speed_h
         self.pos.y += self.speed_v
@@ -133,6 +140,8 @@ class Player(pygame.sprite.Sprite):
         if self.time_elapsed_since_last_action_boost > self.milliseconds_boost:
             self.boost = 2
             print 'boost!!!!!!!!!'
+            self.boost = True
+
             #self.time_elapsed_since_last_action_boost = 0
             if (pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]) and (pressed_keys[K_w] or pressed_keys[K_s] or pressed_keys[K_a] or pressed_keys[K_d]):
                 self.time_elapsed_since_last_action_boost = 0
@@ -209,6 +218,18 @@ class Player(pygame.sprite.Sprite):
                     self.speed_v = 0.5
                 if self.speed_v < 0:
                     self.speed_v = -0.5'''
+
+    def collide_laser(self, laser_list):
+        # creates a temporary rect that moves where the player moves
+        collision_rect = self.rect
+        collision_rect.left += self.speed_h
+        collision_rect.right += self.speed_h
+        collision_rect.top += self.speed_v
+        collision_rect.bottom += self.speed_v
+        for laser in laser_list:
+            if collision_rect.colliderect(laser.rect):
+                if laser.current_image == 0:
+                    self.player_death()
 
 
     def player_death(self):

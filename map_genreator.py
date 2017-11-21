@@ -9,17 +9,18 @@ map_image = pygame.Surface((screen_width, screen_height))
 
 wall_list = []
 grav_well_list = []
-
+laser_list = []
 # Creates a random map matrix with rules
 def generate_a_map():
     pos_x = 0
     pos_y = 0
 
-    map_matrix = numpy.random.randint(4, size=(screen_height / 64, screen_width / 64))
+    map_matrix = numpy.random.randint(5, size=(screen_height / 64, screen_width / 64))
     player_spawn = False
 
     generate_a_map.list_of_wall_pos = []
     generate_a_map.list_of_grav_well_pos = []
+    generate_a_map.list_of_laser_pos = []
 
     generate_a_map.player_spawn_pos = (0, 0)
 
@@ -39,7 +40,9 @@ def generate_a_map():
 
             elif random.random() < 0.85 and tile_num[1] == 3:
                 map_matrix.itemset(current_pos, 0)
-                print "it worked"
+
+            elif random.random() < 0.75 and tile_num[1] == 4:
+                map_matrix.itemset(current_pos, 0)
 
             elif random.random() < 0.6 or (player_spawn == True and tile_num[1] == 2):
                 map_matrix.itemset(current_pos, 0)
@@ -52,7 +55,7 @@ def generate_a_map():
 
     del wall_list[:]
     del grav_well_list[:]
-
+    del laser_list[:]
 # Creates the map image from the map matrix
     for row_num, row_list in enumerate(map_matrix):
         for tile_num in enumerate(row_list):
@@ -77,6 +80,13 @@ def generate_a_map():
                 generate_a_map.list_of_grav_well_pos.append(generate_a_map.grav_well_pos)
                 grav_well_list.append(grav_well)
 
+            elif tile_num[1] == 4:
+                generate_a_map.laser_pos = (pos_x, pos_y)
+                laser = Laser(generate_a_map.laser_pos)
+                floor.render(map_image)
+                generate_a_map.list_of_laser_pos.append(generate_a_map.laser_pos)
+                laser_list.append(laser)
+
             elif tile_num[1] == 0:
                 floor.render(map_image)
 
@@ -87,3 +97,7 @@ def generate_a_map():
 
 def render_map():
     screen.blit(map_image, (0, 0))
+
+def render_lasers():
+    for laser in laser_list:
+        laser.update(screen)
