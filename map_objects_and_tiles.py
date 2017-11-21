@@ -56,6 +56,20 @@ class PlayerSpawnTile(pygame.sprite.Sprite):
         screen.blit(self.player_image, (self.pos.x, self.pos.y))
 
 
+class PlayerWinTile(pygame.sprite.Sprite):
+
+    def __init__(self, (current_pos_x, current_pos_y)):
+        pygame.sprite.Sprite.__init__(self)
+        self.pos = Vector2(current_pos_x, current_pos_y)
+        self.image = pygame.Surface([64, 64])
+        self.rect = self.image.get_rect()
+        self.rect.center = (self.pos.x + 32, self.pos.y + 32)
+        self.win_tile_image = pygame.image.load('map_tiles/win_tile.png').convert_alpha()
+
+    def render(self, screen):
+        screen.blit(self.win_tile_image, (self.pos.x, self.pos.y))
+
+
 class GravWell(pygame.sprite.Sprite):
 
     def __init__(self, (current_pos_x, current_pos_y)):
@@ -68,7 +82,7 @@ class GravWell(pygame.sprite.Sprite):
 
     def render(self, screen):
         screen.blit(self.grav_well_image, (self.pos.x, self.pos.y))
-        
+
 
 class Laser(pygame.sprite.Sprite):
 
@@ -90,7 +104,6 @@ class Laser(pygame.sprite.Sprite):
         if (self.time_num == self.time_target):
             if (self.current_image == 0):
                 self.current_image += 1
-
             else:
                 self.current_image = 0
             self.time_num = 0

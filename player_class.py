@@ -4,7 +4,7 @@ from screen_settings import *
 from map_genreator import *
 
 Vector2 = pygame.math.Vector2
-clock = pygame.time.Clock()
+#clock = pygame.time.Clock()
 
 
 class Player(pygame.sprite.Sprite):
@@ -17,6 +17,7 @@ class Player(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
 
         self.dead = False
+        self.win = False
 
         self.speed_h = 0
         self.speed_v = 0
@@ -52,6 +53,7 @@ class Player(pygame.sprite.Sprite):
         self.player_image_dead = pygame.image.load('spr_player_dead.png').convert_alpha()
         self.boost_image = pygame.image.load('boost.png').convert_alpha()
         self.player_image_rect = pygame.Surface([32, 32])
+        self.win_image = pygame.image.load('map_tiles/win.png').convert_alpha()
         
 
 
@@ -62,6 +64,9 @@ class Player(pygame.sprite.Sprite):
         # boost UI element
         if self.boost == True:
             screen.blit(self.boost_image, (screen_width / 2 , screen_height - 64))
+
+        if self.win == True:
+            screen.blit(self.win_image, (screen_width / 3 , screen_height / 3))
 
         if self.dead == True:
 
@@ -79,7 +84,7 @@ class Player(pygame.sprite.Sprite):
         fog_of_war.set_colorkey((0, 200, 0))
         screen.blit(fog_of_war, (0, 0))
 
-    def player_movement(self, wall, grav_well, laser):
+    def player_movement(self, wall, grav_well, laser, win_tile):
 
         pressed_keys = pygame.key.get_pressed()
 
@@ -142,9 +147,10 @@ class Player(pygame.sprite.Sprite):
                 self.speed_h = self.speed_limit
 
         # put collision func before player movement initialisation
-        Player.collide_wall(self, wall)
         Player.collide_grav_well(self, grav_well)
+        Player.collide_wall(self, wall)
         Player.collide_laser(self, laser)
+        Player.collide_win_tile(self, win_tile)
         # initialize player movement
         self.pos.x += self.speed_h
         self.pos.y += self.speed_v
@@ -210,6 +216,19 @@ class Player(pygame.sprite.Sprite):
                 self.speed_limit = 0.5
             else:
                 self.speed_limit = 5.0
+
+
+    def collide_win_tile(self, win_tile_list):
+        # creates a temporary rect that moves where the player moves
+        collision_rect = self.rect
+        collision_rect.left += self.speed_h
+        collision_rect.right += self.speed_h
+        collision_rect.top += self.speed_v
+        collision_rect.bottom += self.speed_v
+        for win_tile in win_tile_list:
+            if collision_rect.colliderect(win_tile.rect):
+                print "PLAYER WINS!!!!"
+                self.win = True
 
     '''Laser collision function'''
 
