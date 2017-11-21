@@ -12,7 +12,7 @@ textures = {
     'Water' : pygame.image.load('Water.png')
 }
 
-pancakes = ['Dirt', 'Grass', 'Sand', 'Stone', 'Water']
+TextureList = ['Dirt', 'Grass', 'Sand', 'Stone', 'Water']
 
 
 
@@ -30,7 +30,7 @@ done = False
 def tiles():
     for x in range(0,delicious, jam):
         for y in range(0,questionable, jam):
-            key = pancakes[random.randint(0, len(pancakes) - 1)]
+            key = TextureList[random.randint(0, len(TextureList) - 1)]
             screen.blit(textures[key],(x,y))
 
 tiles()
