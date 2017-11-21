@@ -48,6 +48,13 @@ def generate_a_map():
             elif random.random() < 0.75 and tile_num[1] == 4:
                 map_matrix.itemset(current_pos, 0)
 
+            elif random.random() < 0.8 and tile_num[1] == 5:
+                map_matrix.itemset(current_pos, 0)
+                win_tile = True
+
+            #elif random.random() < 0.6 or (win_tile == True and tile_num[1] == 5):
+                #map_matrix.itemset(current_pos, 0)
+
             elif random.random() < 0.6 or (player_spawn == True and tile_num[1] == 2):
                 map_matrix.itemset(current_pos, 0)
 
