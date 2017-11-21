@@ -22,9 +22,10 @@ MapWidth = TileSize*X
 MapLength = TileSize*Y
 
 
-screen = pygame.display.set_mode((MapWidth,MapLength))
+screen = pygame.display.set_mode((MapWidth, MapLength))
 
 done = False
+
 
 def tiles():
     for x in range(0,MapWidth, TileSize):
