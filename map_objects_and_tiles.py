@@ -2,6 +2,10 @@ import pygame
 from player_class import *
 Vector2 = pygame.math.Vector2
 
+'''this file defines all classes used in the map genreator '''
+
+# holds the variable for walls and the function to render it
+
 
 class Wall(pygame.sprite.Sprite):
     def __init__(self, (current_pos_x, current_pos_y)):
@@ -14,6 +18,8 @@ class Wall(pygame.sprite.Sprite):
     def render(self, screen):
         wall_image = pygame.image.load('map_tiles/wall_tile.png').convert_alpha()
         screen.blit(wall_image, (self.pos.x, self.pos.y))
+
+# holds the variable for door and the function to render it
 
 
 class Door(pygame.sprite.Sprite):
@@ -30,6 +36,8 @@ class Door(pygame.sprite.Sprite):
         wall_image = pygame.image.load('map_tiles/floor_tile.png').convert_alpha()
         screen.blit(wall_image, (self.pos.x, self.pos.y))
 
+# holds the variable for floor tiles and the function to render it
+
 
 class Floor(pygame.sprite.Sprite):
     def __init__(self, current_pos_x, current_pos_y):
@@ -40,6 +48,8 @@ class Floor(pygame.sprite.Sprite):
         floor_image = pygame.image.load('map_tiles/floor_tile.png').convert_alpha()
         screen.blit(floor_image, (self.pos.x, self.pos.y))
 
+# holds the variable for the spawn tile and the function to render it
+
 
 class PlayerSpawnTile(pygame.sprite.Sprite):
     def __init__(self, current_pos_x, current_pos_y):
@@ -49,6 +59,8 @@ class PlayerSpawnTile(pygame.sprite.Sprite):
     def render(self, screen):
         player_image = pygame.image.load('map_tiles/floor_tile.png').convert_alpha()
         screen.blit(player_image, (self.pos.x, self.pos.y))
+
+# holds the variable for the gravity well and the function to render it
 
 
 class GravWell(pygame.sprite.Sprite):
@@ -62,6 +74,8 @@ class GravWell(pygame.sprite.Sprite):
     def render(self, screen):
         grav_well_image = pygame.image.load('map_tiles/grav_well_tile.png').convert_alpha()
         screen.blit(grav_well_image, (self.pos.x, self.pos.y))
+
+# holds the variable for lasers and the function to render it as well as turning the lazer on and off
 
 
 class Laser(pygame.sprite.Sprite):
