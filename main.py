@@ -2,7 +2,6 @@ import pygame
 from screen_settings import *
 from player_class import *
 from map_genreator import *
-from vision_mechanic import *
 
 # initiate pygame
 pygame.init()
@@ -32,13 +31,14 @@ while running:
         # toggle between vision
         if toggle_state == False and event.type == pygame.KEYDOWN and event.key == pygame.K_e:
             toggle_state = True
-            vision_mechanic(int(round(player.pos.x + 32)), int(round(player.pos.y + 32)))
+            player.vision_mechanic()
         elif toggle_state == True and event.type == pygame.KEYDOWN and event.key == pygame.K_e:
             toggle_state = False
             render_map()
 
     if not toggle_state:
-        vision_mechanic(int(round(player.pos.x + 32)), int(round(player.pos.y + 32)))
+        player.vision_mechanic()
+        #vision_mechanic(int(round(player.pos.x + 32)), int(round(player.pos.y + 32)))
     if toggle_state:
         render_map()
 

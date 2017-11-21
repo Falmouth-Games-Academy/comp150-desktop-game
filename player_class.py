@@ -1,9 +1,11 @@
 import pygame
 from pygame.locals import *
 from screen_settings import *
+from map_genreator import *
 
 Vector2 = pygame.math.Vector2
 clock = pygame.time.Clock()
+
 
 class Player(pygame.sprite.Sprite):
     speed_limit = 5
@@ -65,6 +67,15 @@ class Player(pygame.sprite.Sprite):
 
             screen.blit(player_image, (self.pos.x, self.pos.y))
 
+    def vision_mechanic(self):
+        vision_radius = 200
+        display_size = (screen_width, screen_height)
+        screen.blit(map_image, (0, 0))
+        fog_of_war = pygame.Surface(display_size)
+        pygame.draw.circle(fog_of_war, (0, 200, 0), (int(round(self.pos.x + 32)), int(round(self.pos.y+32))), vision_radius, 0)
+        fog_of_war.set_colorkey((0, 200, 0))
+        screen.blit(fog_of_war, (0, 0))
+
     def player_movement(self, wall, grav_well, laser):
 
         pressed_keys = pygame.key.get_pressed()
@@ -81,51 +92,51 @@ class Player(pygame.sprite.Sprite):
         self.time_elapsed_since_last_action_right += self.dt_right
         self.time_elapsed_since_last_action_boost += self.dt_boost
 
+        # when the player dies this If statement disables control over the player.
+        if self.dead == False:
 
+            # movement up
+            # clocks limit the number of events that take place when keys are pressed
+            if self.time_elapsed_since_last_action_up > self.milliseconds:
+                if pressed_keys[K_w] or pressed_keys[K_UP]:
+                    self.speed_v -= self.increase
+                    # reset clock
+                    self.time_elapsed_since_last_action_up = 0
+                    # set an upward speed limit
+            if (pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]) and (pressed_keys[K_w] or pressed_keys[K_UP]):
+                self.speed_v -= self.boost
+            if self.speed_v <= - self.speed_limit:
+                self.speed_v = - self.speed_limit
 
-        # movement up
-        # clocks limit the number of events that take place when keys are pressed
-        if self.time_elapsed_since_last_action_up > self.milliseconds:
-            if pressed_keys[K_w] or pressed_keys[K_UP]:
-                self.speed_v -= self.increase
-                # reset clock
-                self.time_elapsed_since_last_action_up = 0
-                # set an upward speed limit
-        if (pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]) and (pressed_keys[K_w] or pressed_keys[K_UP]):
-            self.speed_v -= self.boost
-        if self.speed_v <= - self.speed_limit:
-            self.speed_v = - self.speed_limit
+            # movement down
+            if self.time_elapsed_since_last_action_down > self.milliseconds:
+                if pressed_keys[K_s] or pressed_keys[K_DOWN]:
+                    self.speed_v += self.increase
+                    self.time_elapsed_since_last_action_down = 0
+            if (pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]) and (pressed_keys[K_s] or pressed_keys[K_DOWN]):
+                self.speed_v += self.boost
+            if self.speed_v >= self.speed_limit:
+                self.speed_v = self.speed_limit
 
+            # movement left
+            if self.time_elapsed_since_last_action_left > self.milliseconds:
+                if pressed_keys[K_a] or pressed_keys[K_LEFT]:
+                    self.speed_h -= self.increase
+                    self.time_elapsed_since_last_action_left = 0
+            if (pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]) and (pressed_keys[K_a] or pressed_keys[K_LEFT]):
+                self.speed_h -= self.boost
+            if self.speed_h <= - self.speed_limit:
+                self.speed_h = - self.speed_limit
 
-        # movement down
-        if self.time_elapsed_since_last_action_down > self.milliseconds:
-            if pressed_keys[K_s] or pressed_keys[K_DOWN]:
-                self.speed_v += self.increase
-                self.time_elapsed_since_last_action_down = 0
-        if (pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]) and (pressed_keys[K_s] or pressed_keys[K_DOWN]):
-            self.speed_v += self.boost
-        if self.speed_v >= self.speed_limit:
-            self.speed_v = self.speed_limit
-
-        # movement left
-        if self.time_elapsed_since_last_action_left > self.milliseconds:
-            if pressed_keys[K_a] or pressed_keys[K_LEFT]:
-                self.speed_h -= self.increase
-                self.time_elapsed_since_last_action_left = 0
-        if (pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]) and (pressed_keys[K_a] or pressed_keys[K_LEFT]):
-            self.speed_h -= self.boost
-        if self.speed_h <= - self.speed_limit:
-            self.speed_h = - self.speed_limit
-
-        # movement right
-        if self.time_elapsed_since_last_action_right > self.milliseconds:
-            if pressed_keys[K_d] or pressed_keys[K_RIGHT]:
-                self.speed_h += self.increase
-                self.time_elapsed_since_last_action_right = 0
-        if (pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]) and (pressed_keys[K_d] or pressed_keys[K_RIGHT]):
-            self.speed_h += self.boost
-        if self.speed_h >= self.speed_limit:
-            self.speed_h = self.speed_limit
+            # movement right
+            if self.time_elapsed_since_last_action_right > self.milliseconds:
+                if pressed_keys[K_d] or pressed_keys[K_RIGHT]:
+                    self.speed_h += self.increase
+                    self.time_elapsed_since_last_action_right = 0
+            if (pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]) and (pressed_keys[K_d] or pressed_keys[K_RIGHT]):
+                self.speed_h += self.boost
+            if self.speed_h >= self.speed_limit:
+                self.speed_h = self.speed_limit
 
         # put collision func before player movement initialisation
         Player.collide_wall(self, wall)
@@ -139,19 +150,13 @@ class Player(pygame.sprite.Sprite):
 
         if self.time_elapsed_since_last_action_boost > self.milliseconds_boost:
             self.boost = 2
-            print 'boost!!!!!!!!!'
             self.boost = True
 
-            #self.time_elapsed_since_last_action_boost = 0
             if (pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]) and (pressed_keys[K_w] or pressed_keys[K_s] or pressed_keys[K_a] or pressed_keys[K_d]):
                 self.time_elapsed_since_last_action_boost = 0
                 self.boost = 0
 
-        if self.dead == True:
-            self.speed_h = 0
-            self.speed_v = 0
-            self.increase = 0
-            self.boost = 0
+
 
 
     '''Wall collision function'''
