@@ -15,11 +15,11 @@ textures = {
 TextureList = ['Dirt', 'Grass', 'Sand', 'Stone', 'Water']
 
 
-jam = 64
-crumpet = 16
-butter = 11
-MapWidth = jam*crumpet
-MapLength = jam*butter
+TileSize = 64
+X = 16
+Y = 11
+MapWidth = TileSize*X
+MapLength = TileSize*Y
 
 
 screen = pygame.display.set_mode((MapWidth,MapLength))
@@ -27,8 +27,8 @@ screen = pygame.display.set_mode((MapWidth,MapLength))
 done = False
 
 def tiles():
-    for x in range(0,MapWidth, jam):
-        for y in range(0,MapLength, jam):
+    for x in range(0,MapWidth, TileSize):
+        for y in range(0,MapLength, TileSize):
             key = TextureList[random.randint(0, len(TextureList) - 1)]
             screen.blit(textures[key],(x,y))
 
