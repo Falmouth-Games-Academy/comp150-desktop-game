@@ -2,6 +2,10 @@ import pygame
 from player_class import *
 Vector2 = pygame.math.Vector2
 
+'''this file defines all classes used in the map genreator '''
+
+# holds the variable for walls and the function to render it
+
 
 class Wall(pygame.sprite.Sprite):
 
@@ -15,6 +19,8 @@ class Wall(pygame.sprite.Sprite):
 
     def render(self, screen):
         screen.blit(self.wall_image, (self.pos.x, self.pos.y))
+
+# holds the variable for door and the function to render it
 
 
 class Door(pygame.sprite.Sprite):
@@ -33,6 +39,8 @@ class Door(pygame.sprite.Sprite):
     def render(self, screen):
         screen.blit(self.wall_image, (self.pos.x, self.pos.y))
 
+# holds the variable for floor tiles and the function to render it
+
 
 class Floor(pygame.sprite.Sprite):
 
@@ -43,6 +51,8 @@ class Floor(pygame.sprite.Sprite):
 
     def render(self, screen):
         screen.blit(self.floor_image, (self.pos.x, self.pos.y))
+
+# holds the variable for the spawn tile and the function to render it
 
 
 class PlayerSpawnTile(pygame.sprite.Sprite):
@@ -55,6 +65,8 @@ class PlayerSpawnTile(pygame.sprite.Sprite):
     def render(self, screen):
         screen.blit(self.player_image, (self.pos.x, self.pos.y))
 
+# holds the variable for the gravity well and the function to render it
+
 
 class GravWell(pygame.sprite.Sprite):
 
@@ -65,10 +77,11 @@ class GravWell(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (self.pos.x + 32, self.pos.y + 32)
         self.grav_well_image = pygame.image.load('map_tiles/grav_well_tile.png').convert_alpha()
-
-    def render(self, screen):
-        screen.blit(self.grav_well_image, (self.pos.x, self.pos.y))
         
+    def render(self, screen):
+        # holds the variable for lasers and the function to render it as well as turning the lazer on and off
+        screen.blit(self.grav_well_image, (self.pos.x, self.pos.y))
+
 
 class Laser(pygame.sprite.Sprite):
 

@@ -10,7 +10,9 @@ map_image = pygame.Surface((screen_width, screen_height))
 wall_list = []
 grav_well_list = []
 laser_list = []
-# Creates a random map matrix with rules
+''' Creates a random map matrix with rules'''
+
+
 def generate_a_map():
     pos_x = 0
     pos_y = 0
@@ -26,13 +28,14 @@ def generate_a_map():
 
     for row_num, row_list in enumerate(map_matrix):
         for tile_num in enumerate(row_list):
-
+            # gets the postison of the tile above and the tile to the left
             tile_above = (row_num - 1, tile_num[0])
             tile_left = (row_num, tile_num[0] - 1)
             current_pos = (row_num, tile_num[0])
 
             # IF statement rules to apply to the map matrix
-            if row_num == 0 or row_num == screen_height / 64 - 1 or tile_num[0] == 0 or tile_num[0] == screen_width / 64 -1:
+            if row_num == 0 or row_num == screen_height / 64 - 1 or tile_num[0] == 0 \
+            or tile_num[0] == screen_width / 64 -1:
                 map_matrix.itemset(current_pos, 1)
 
             elif random.random() < 0.2 and map_matrix.item(tile_left) == 1:
@@ -61,7 +64,7 @@ def generate_a_map():
         for tile_num in enumerate(row_list):
             floor = Floor(pos_x, pos_y)
             player_tile = PlayerSpawnTile(pos_x, pos_y)
-
+            # render all images made in map objects and tiles
             if tile_num[1] == 1:
                 generate_a_map.wall_pos = (pos_x, pos_y)
                 wall = Wall(generate_a_map.wall_pos)
