@@ -2,7 +2,7 @@ import random, pygame, sys
 
 pygame.init()
 
-pygame.display.set_caption('Kill me!')
+pygame.display.set_caption('Pillars')
 
 textures = {
     'Dirt' : pygame.image.load('Dirt.png'),
