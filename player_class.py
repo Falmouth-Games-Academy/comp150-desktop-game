@@ -4,7 +4,8 @@ from screen_settings import *
 from map_genreator import *
 
 Vector2 = pygame.math.Vector2
-#clock = pygame.time.Clock()
+clock = pygame.time.Clock()
+'''defines the player class'''
 
 
 class Player(pygame.sprite.Sprite):
@@ -48,6 +49,7 @@ class Player(pygame.sprite.Sprite):
         self.time_elapsed_since_last_action_left += self.dt_left
         self.time_elapsed_since_last_action_right += self.dt_right
         self.time_elapsed_since_last_action_boost += self.dt_boost
+    # code for rendering the player
 
         self.player_image = pygame.image.load('spr_player.png').convert_alpha()
         self.player_image_dead = pygame.image.load('spr_player_dead.png').convert_alpha()
@@ -58,19 +60,20 @@ class Player(pygame.sprite.Sprite):
 
 
     def render(self, screen):
-
         self.rect = self.player_image_rect.get_rect()
         self.rect.center = (self.pos.x + 26, self.pos.y + 26)
         # boost UI element
         if self.boost == True:
             screen.blit(self.boost_image, (screen_width / 2 , screen_height - 64))
 
+
         if self.win == True:
             screen.blit(self.win_image, (screen_width / 3 , screen_height / 3))
 
         if self.dead == True:
-
+          
             screen.blit(self.player_image_dead, (self.pos.x, self.pos.y))
+            
         else:
 
             screen.blit(self.player_image, (self.pos.x, self.pos.y))
@@ -80,7 +83,8 @@ class Player(pygame.sprite.Sprite):
         display_size = (screen_width, screen_height)
         screen.blit(map_image, (0, 0))
         fog_of_war = pygame.Surface(display_size)
-        pygame.draw.circle(fog_of_war, (0, 200, 0), (int(round(self.pos.x + 32)), int(round(self.pos.y+32))), vision_radius, 0)
+        pygame.draw.circle(fog_of_war, (0, 200, 0), (int(round(self.pos.x + 32)), int(round(self.pos.y+32))),
+                           vision_radius, 0)
         fog_of_war.set_colorkey((0, 200, 0))
         screen.blit(fog_of_war, (0, 0))
 
@@ -101,7 +105,7 @@ class Player(pygame.sprite.Sprite):
         self.time_elapsed_since_last_action_boost += self.dt_boost
 
         # when the player dies this If statement disables control over the player.
-        if self.dead == False:
+        if not self.dead:
 
             # movement up
             # clocks limit the number of events that take place when keys are pressed
@@ -243,7 +247,6 @@ class Player(pygame.sprite.Sprite):
             if collision_rect.colliderect(laser.rect):
                 if laser.current_image == 0:
                     self.player_death()
-
 
     def player_death(self):
         self.dead = True
