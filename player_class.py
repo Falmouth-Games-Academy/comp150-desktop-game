@@ -46,24 +46,32 @@ class Player(pygame.sprite.Sprite):
         self.time_elapsed_since_last_action_right += self.dt_right
         self.time_elapsed_since_last_action_boost += self.dt_boost
 
+        self.player_image = pygame.image.load('spr_player.png').convert_alpha()
+        self.player_image_dead = pygame.image.load('spr_player_dead.png').convert_alpha()
+        self.boost_image = pygame.image.load('boost.png').convert_alpha()
+        self.player_image_rect = pygame.Surface([32, 32])
+        #self.rect = self.player_image_rect.get_rect()
+        #self.rect.center = (self.pos.x + 26, self.pos.y + 26)
+
+
     def render(self, screen):
-        player_image = pygame.image.load('spr_player.png').convert_alpha()
-        player_image_dead = pygame.image.load('spr_player_dead.png').convert_alpha()
-        boost_image = pygame.image.load('boost.png').convert_alpha()
+        #player_image = pygame.image.load('spr_player.png').convert_alpha()
+        #player_image_dead = pygame.image.load('spr_player_dead.png').convert_alpha()
+        #boost_image = pygame.image.load('boost.png').convert_alpha()
         #screen.blit(player_image, (self.pos.x, self.pos.y))
-        self.player_image = pygame.Surface([32, 32])
-        self.rect = self.player_image.get_rect()
+        #self.player_image = pygame.Surface([32, 32])
+        self.rect = self.player_image_rect.get_rect()
         self.rect.center = (self.pos.x + 26, self.pos.y + 26)
         # boost UI element
         if self.boost == True:
-            screen.blit(boost_image, (screen_width / 2 , screen_height - 64))
+            screen.blit(self.boost_image, (screen_width / 2 , screen_height - 64))
 
         if self.dead == True:
 
-            screen.blit(player_image_dead, (self.pos.x, self.pos.y))
+            screen.blit(self.player_image_dead, (self.pos.x, self.pos.y))
         else:
 
-            screen.blit(player_image, (self.pos.x, self.pos.y))
+            screen.blit(self.player_image, (self.pos.x, self.pos.y))
 
     def player_movement(self, wall, grav_well, laser):
 
