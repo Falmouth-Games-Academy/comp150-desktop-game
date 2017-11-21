@@ -10,12 +10,12 @@ pygame.init()
 FPS = 60
 fpsClock = pygame.time.Clock()
 
-generate_a_map()
+
 generate_a_map()
 player = Player(generate_a_map.player_spawn_pos)
 
 toggle_state = False
-global running
+
 running = True
 while running:
     pressed_keys = pygame.key.get_pressed()
@@ -46,7 +46,7 @@ while running:
     #laser.update(screen)
     render_lasers()
     player.render(screen)
-    player.player_movement(wall_list, grav_well_list, laser_list)
+    player.player_movement(wall_list, grav_well_list, laser_list, win_tile_list)
 
     pygame.display.update()
     fpsClock.tick(FPS)
