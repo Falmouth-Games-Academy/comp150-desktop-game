@@ -3,7 +3,7 @@ import random
 import numpy
 from map_objects_and_tiles import *
 from screen_settings import *
-
+#
 Vector2 = pygame.math.Vector2
 map_image = pygame.Surface((screen_width, screen_height))
 
@@ -43,10 +43,10 @@ def generate_a_map():
             or tile_num[0] == screen_width / 64 -1:
                 map_matrix.itemset(current_pos, 1)
 
-            elif random.random() < 0.2 and map_matrix.item(tile_left) == 1:
+            elif random.random() < 0.3 and map_matrix.item(tile_left) == 1:
                 map_matrix.itemset(current_pos, 1)
 
-            elif random.random() < 0.85 and tile_num[1] == 3:
+            elif random.random() < 0.5 and tile_num[1] == 3:
                 map_matrix.itemset(current_pos, 0)
 
             elif random.random() < 0.75 and tile_num[1] == 4:
@@ -62,8 +62,8 @@ def generate_a_map():
             elif tile_num[1] == 5 and win_tile == True:
                 map_matrix.itemset(current_pos, 0)
 
-            elif random.random() < 0.3:
-                map_matrix.itemset(current_pos, 3)
+            elif random.random() < 0.1:
+                map_matrix.itemset(current_pos, 4)
 
             elif random.random() < 0.3 and player_spawn == False:
                 map_matrix.itemset(current_pos, 2)

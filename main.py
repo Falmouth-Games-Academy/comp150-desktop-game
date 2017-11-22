@@ -41,6 +41,7 @@ while running:
         render_lasers()
 
     # running core gameplay elements
+
     player.render(screen)
     player.player_movement(wall_list, grav_well_list, laser_list, win_tile_list)
 
