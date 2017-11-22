@@ -5,22 +5,20 @@ import time
 pygame.init()
 screen = pygame.display.set_mode((300, 300))
 
-#Creates character png and sets its location
-main_Char = (pygame.image.load("sTAN.png").convert(),[0,0])
+#Creates character/enemy png and sets its location
+main_Char = (pygame.image.load("idle.png").convert(),[0,0])
 main_char_speed = 2
-
-
+enemy_char = (pygame.image.load("enemy.png").convert(),[1,1])
+enemy_char_speed = 3
 
 #Mouse location
 mouse_loc = (0,0)
-
 
 def move_Char(delta): #Moves sprite towards mouse location
     x = (mouse_loc[0]-main_Char[1][0])*main_char_speed*delta
     y = (mouse_loc[1]-main_Char[1][1])*main_char_speed*delta
     main_Char[1][0] += x
     main_Char[1][1] += y
-
 
 time1=0
 while True:
