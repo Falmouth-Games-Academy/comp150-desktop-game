@@ -20,6 +20,7 @@ class Player(pygame.sprite.Sprite):
 
         self.dead = False
         self.win = False
+        self.lose = False
 
         self.speed_h = 0
         self.speed_v = 0
@@ -57,7 +58,7 @@ class Player(pygame.sprite.Sprite):
         self.boost_image = pygame.image.load('boost.png').convert_alpha()
         self.player_image_rect = pygame.Surface([32, 32])
         self.win_image = pygame.image.load('map_tiles/win.png').convert_alpha()
-        
+        self.lose_image = pygame.image.load('map_tiles/lose.png').convert_alpha()
 
 
     def render(self, screen):
@@ -67,6 +68,8 @@ class Player(pygame.sprite.Sprite):
         if self.boost == True:
             screen.blit(self.boost_image, (screen_width / 2 , screen_height - 64))
 
+        if self.lose == True:
+            screen.blit(self.lose_image, (screen_width / 3 , screen_height / 3))
 
         if self.win == True:
             screen.blit(self.win_image, (screen_width / 3 , screen_height / 3))
@@ -255,5 +258,7 @@ class Player(pygame.sprite.Sprite):
                 if laser.current_image == 0:
                     self.player_death()
 
+
     def player_death(self):
         self.dead = True
+        self.lose = True
