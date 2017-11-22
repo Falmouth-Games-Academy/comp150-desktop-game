@@ -43,28 +43,27 @@ def generate_a_map():
             or tile_num[0] == screen_width / 64 -1:
                 map_matrix.itemset(current_pos, 1)
 
-            elif random.random() < 0.2 and map_matrix.item(tile_left) == 1:
+            elif random.random() < 0.3 and map_matrix.item(tile_left) == 1:
                 map_matrix.itemset(current_pos, 1)
 
-            elif random.random() < 0.85 and tile_num[1] == 3:
+            elif random.random() < 0.5 and tile_num[1] == 3:
                 map_matrix.itemset(current_pos, 0)
 
             elif random.random() < 0.75 and tile_num[1] == 4:
                 map_matrix.itemset(current_pos, 0)
 
-            elif random.random() < 0.8 and tile_num[1] == 5:
-                map_matrix.itemset(current_pos, 0)
-                win_tile = True
-
-            #elif random.random() < 0.6 or (win_tile == True and tile_num[1] == 5):
-                #map_matrix.itemset(current_pos, 0)
-
             elif random.random() < 0.6 or (player_spawn == True and tile_num[1] == 2):
                 map_matrix.itemset(current_pos, 0)
 
-            elif random.random() < 0.3 and win_tile == False:
-                map_matrix.itemset(current_pos, 3)
+            elif tile_num[1] == 5 and win_tile == False:
+                map_matrix.itemset(current_pos, 5)
                 win_tile = True
+
+            elif tile_num[1] == 5 and win_tile == True:
+                map_matrix.itemset(current_pos, 0)
+
+            elif random.random() < 0.1:
+                map_matrix.itemset(current_pos, 4)
 
             elif random.random() < 0.3 and player_spawn == False:
                 map_matrix.itemset(current_pos, 2)
