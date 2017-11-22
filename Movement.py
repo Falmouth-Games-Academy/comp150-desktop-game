@@ -5,8 +5,8 @@ import time
 pygame.init()
 screen = pygame.display.set_mode((300, 300))
 
-ship_info = (pygame.image.load("sTAN.png").convert(),[0,0])
-SHIP_SPEED = 2
+main_Char = (pygame.image.load("sTAN.png").convert(),[0,0])
+main_char_speed = 2
 
 
 
@@ -15,10 +15,10 @@ mouse_loc = (0,0)
 
 
 def move_ship(delta):
-    x = (mouse_loc[0]-ship_info[1][0])*SHIP_SPEED*delta
-    y = (mouse_loc[1]-ship_info[1][1])*SHIP_SPEED*delta
-    ship_info[1][0] += x
-    ship_info[1][1] += y
+    x = (mouse_loc[0]-main_Char[1][0])*main_char_speed*delta
+    y = (mouse_loc[1]-main_Char[1][1])*main_char_speed*delta
+    main_Char[1][0] += x
+    main_Char[1][1] += y
 
 
 time1=0
@@ -39,5 +39,5 @@ while True:
 
     move_ship(delta)
     screen.fill((0, 0, 255))
-    screen.blit(ship_info[0],ship_info[1])
+    screen.blit(main_Char[0],main_Char[1])
     pygame.display.flip()
