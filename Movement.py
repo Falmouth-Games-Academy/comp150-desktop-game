@@ -14,7 +14,7 @@ main_char_speed = 2
 mouse_loc = (0,0)
 
 
-def move_ship(delta):
+def move_Char(delta):
     x = (mouse_loc[0]-main_Char[1][0])*main_char_speed*delta
     y = (mouse_loc[1]-main_Char[1][1])*main_char_speed*delta
     main_Char[1][0] += x
@@ -37,7 +37,7 @@ while True:
             mouse_loc = pygame.mouse.get_pos()
             print mouse_loc
 
-    move_ship(delta)
+    move_Char(delta)
     screen.fill((0, 0, 255))
     screen.blit(main_Char[0],main_Char[1])
     pygame.display.flip()
