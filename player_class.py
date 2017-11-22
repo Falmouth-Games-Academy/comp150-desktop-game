@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 from screen_settings import *
 from map_genreator import *
+from map_objects_and_tiles import *
 
 Vector2 = pygame.math.Vector2
 clock = pygame.time.Clock()
@@ -79,14 +80,20 @@ class Player(pygame.sprite.Sprite):
             screen.blit(self.player_image, (self.pos.x, self.pos.y))
 
     def vision_mechanic(self):
-        vision_radius = 200
         display_size = (screen_width, screen_height)
-        screen.blit(map_image, (0, 0))
-        fog_of_war = pygame.Surface(display_size)
-        pygame.draw.circle(fog_of_war, (0, 200, 0), (int(round(self.pos.x + 32)), int(round(self.pos.y+32))),
-                           vision_radius, 0)
-        fog_of_war.set_colorkey((0, 200, 0))
-        screen.blit(fog_of_war, (0, 0))
+        vision_radius = 200
+        darkness = pygame.Surface(display_size)
+        render_lasers()
+        screen.blit(darkness, (0, 0))
+
+        vision_system = True
+
+        if vision_system:
+            screen.blit(map_image, (self.pos.x - 200 + 32, self.pos.y - 200 + 32), (self.pos.x - 200 + 32, self.pos.y - 200 + 32, 400, 400))
+            pygame.draw.circle(darkness, (0, 200, 0), (int(round(self.pos.x + 32)), int(round(self.pos.y+32))), vision_radius, 0)
+            darkness.set_colorkey((0, 200, 0))
+            render_lasers()
+            screen.blit(darkness, (0, 0))
 
     def player_movement(self, wall, grav_well, laser, win_tile):
 
@@ -221,6 +228,7 @@ class Player(pygame.sprite.Sprite):
             else:
                 self.speed_limit = 5.0
 
+    '''Winning tile collision function'''
 
     def collide_win_tile(self, win_tile_list):
         # creates a temporary rect that moves where the player moves
@@ -231,7 +239,6 @@ class Player(pygame.sprite.Sprite):
         collision_rect.bottom += self.speed_v
         for win_tile in win_tile_list:
             if collision_rect.colliderect(win_tile.rect):
-                print "PLAYER WINS!!!!"
                 self.win = True
 
     '''Laser collision function'''
@@ -250,5 +257,3 @@ class Player(pygame.sprite.Sprite):
 
     def player_death(self):
         self.dead = True
-
-
