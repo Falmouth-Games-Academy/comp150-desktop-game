@@ -24,6 +24,9 @@ button2 = pygame.image.load('Button2.jpg')
 button3 = pygame.image.load('Button3.jpg')
 window.blit(mainmenu_img, (0,0))
 pygame.display.flip()
+fpsClock = pygame.time.Clock()
+
+
 
 # Variables for loading our tiles and arranging them into a list with a key
 TileList = ['Dirt', 'Grass', 'Sand', 'Stone', 'Water']
@@ -70,5 +73,20 @@ while not done:
                 tile_gen()
                 pygame.display.flip()
                 map_generated = True
+
+
+    idle = pygame.image.load("idle1.png"),
+    runningframeone = pygame.image.load("running1.png")
+    runningframetwo = pygame.image.load("running2.png")
+    runningframethree = pygame.image.load("running3.png")
+    runningframefour = pygame.image.load("running4.png")
+    runningframefive = pygame.image.load("running5.png")
+    runningframesix  = pygame.image.load("running6.png")
+
+
+
+
+
+
 
     pygame.display.update()
