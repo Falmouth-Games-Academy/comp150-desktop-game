@@ -41,3 +41,4 @@ while True:
     screen.blit(main_Char[0],main_Char[1])
     screen.blit(enemy_char[0], enemy_char[1])
     pygame.display.flip()
+
