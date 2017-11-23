@@ -24,6 +24,12 @@ button3 = pygame.image.load('Button3.jpg')
 window.blit(mainmenu_img, (0,0))
 pygame.display.flip()
 
+time1=0
+while True:
+    time2 = time1
+    time1 = time.clock()
+    delta = time1-time2 #sets delta time (time between frames)
+
 # Variables for loading our tiles and arranging them into a list with a key
 TileList = ['Dirt', 'Grass', 'Sand', 'Stone', 'Water']
 key = TileList[random.randint(0, len(TileList) - 1)]
@@ -48,6 +54,8 @@ pygame.display.flip()
 
 control_shown = False
 map_generated = False
+character_shown = False
+enemy_shown = False
 
 done = False
 while not done:
@@ -69,4 +77,14 @@ while not done:
             elif not map_generated:
                 tile_gen()
                 pygame.display.flip()
+            elif map_generated:
+                character_shown = True
+                enemy_shown = True
+                window.blit(main_Char[0], main_Char[1])
+                window.blit(enemy_char[0], enemy_char[1])
+                pygame.display.flip()
+            if pygame.mouse.get_pressed()[0]:  # Sets mouse location on mouse left click
+                mouse_loc = pygame.mouse.get_pos()
+                print mouse_loc
 
+    pygame.display.update()
