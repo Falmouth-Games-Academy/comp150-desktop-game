@@ -15,6 +15,10 @@ class Player(pygame.sprite.Sprite):
     milliseconds_boost = 2000
     dead = False
 
+    counter = 0
+    MAX_VISION_RADIUS = 200
+    VISION_SPEED = 40
+
     def __init__(self, (current_pos_x, current_pos_y)):
         pygame.sprite.Sprite.__init__(self)
 
@@ -82,21 +86,33 @@ class Player(pygame.sprite.Sprite):
 
             screen.blit(self.player_image, (self.pos.x, self.pos.y))
 
-    def vision_mechanic(self):
+    def vision_mechanic(self, Dtime):
         display_size = (screen_width, screen_height)
-        vision_radius = 200
+
+
         darkness = pygame.Surface(display_size)
-        render_lasers()
         screen.blit(darkness, (0, 0))
 
-        vision_system = True
 
-        if vision_system:
-            screen.blit(map_image, (self.pos.x - 200 + 32, self.pos.y - 200 + 32), (self.pos.x - 200 + 32, self.pos.y - 200 + 32, 400, 400))
-            pygame.draw.circle(darkness, (0, 200, 0), (int(round(self.pos.x + 32)), int(round(self.pos.y+32))), vision_radius, 0)
-            darkness.set_colorkey((0, 200, 0))
-            render_lasers()
-            screen.blit(darkness, (0, 0))
+        vision_radius = 0
+
+
+
+        if self.counter <= self.MAX_VISION_RADIUS:
+            vision_radius = self.counter
+        elif self.counter <= self.MAX_VISION_RADIUS * 2:
+            vision_radius = self.MAX_VISION_RADIUS * 2 - self.counter
+        else:
+            self.counter = 0
+        self.counter += self.VISION_SPEED * Dtime
+
+        pygame.draw.circle(darkness, (0, 0, 1), (int(self.pos.x + 25), int(self.pos.y) + 25), int(vision_radius))
+        darkness.set_colorkey((0, 0, 1))
+
+        screen.blit(map_image, (self.pos.x - 200 + 32, self.pos.y - 200 + 32),
+                    (self.pos.x - 200 + 32, self.pos.y - 200 + 32, 400, 400))
+        render_lasers()
+        screen.blit(darkness, (0, 0))
 
     def player_movement(self, wall, grav_well, laser, win_tile):
 
