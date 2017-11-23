@@ -70,3 +70,4 @@ while not done:
                 tile_gen()
                 pygame.display.flip()
 
+    pygame.display.update()
