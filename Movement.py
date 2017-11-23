@@ -14,7 +14,7 @@ enemy_char_speed = 3
 #Mouse location
 mouse_loc = (0,0)
 
-def move_Char(delta): #Moves sprite towards mouse location
+def move_char(delta): #Moves sprite towards mouse location
     x = (mouse_loc[0]-main_Char[1][0])*main_char_speed*delta
     y = (mouse_loc[1]-main_Char[1][1])*main_char_speed*delta
     main_Char[1][0] += x
@@ -36,7 +36,9 @@ while True:
             mouse_loc = pygame.mouse.get_pos()
             print mouse_loc
 
-    move_Char(delta)
+    move_char(delta)
     screen.fill((0, 0, 255))
     screen.blit(main_Char[0],main_Char[1])
+    pygame.display.flip()
+    screen.blit(enemy_char[0], main_Char[1])
     pygame.display.flip()
