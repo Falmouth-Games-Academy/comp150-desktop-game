@@ -3,7 +3,7 @@ import random
 import numpy
 from map_objects_and_tiles import *
 from screen_settings import *
-#
+
 Vector2 = pygame.math.Vector2
 map_image = pygame.Surface((screen_width, screen_height))
 

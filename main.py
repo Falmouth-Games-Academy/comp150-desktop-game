@@ -2,6 +2,7 @@ import pygame
 from screen_settings import *
 from player_class import *
 from map_genreator import *
+import time
 # initiate pygame
 pygame.init()
 
@@ -16,7 +17,11 @@ player = Player(generate_a_map.player_spawn_pos)
 toggle_state = False
 
 running = True
+time1= 0.00
 while running:
+    time2 = time1
+    time1 = time.clock()
+    deltatime = time1 - time2
     pressed_keys = pygame.key.get_pressed()
 
     for event in pygame.event.get():
@@ -28,15 +33,12 @@ while running:
             generate_a_map()
 
         # toggle between vision
-        if toggle_state == False and event.type == pygame.KEYDOWN and event.key == pygame.K_e:
-            toggle_state = True
-        elif toggle_state == True and event.type == pygame.KEYDOWN and event.key == pygame.K_e:
-            toggle_state = False
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_e:
+            toggle_state = not toggle_state
 
     if not toggle_state:
-        player.vision_mechanic()
-        #vision_mechanic(int(round(player.pos.x + 32)), int(round(player.pos.y + 32)))
-    if toggle_state:
+        player.vision_mechanic(deltatime)
+    else:
         render_map()
         render_lasers()
 
