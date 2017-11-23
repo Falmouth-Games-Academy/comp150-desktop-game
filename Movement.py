@@ -8,7 +8,7 @@ screen = pygame.display.set_mode((300, 300))
 #Creates character/enemy png and sets its location
 main_Char = (pygame.image.load("idle.png").convert(),[0,0])
 main_char_speed = 2
-enemy_char = (pygame.image.load("enemy.png").convert(),[1,1])
+enemy_char = (pygame.image.load("enemy.png").convert(),[0,2])
 enemy_char_speed = 3
 
 #Mouse location
@@ -39,6 +39,5 @@ while True:
     move_char(delta)
     screen.fill((0, 0, 255))
     screen.blit(main_Char[0],main_Char[1])
-    pygame.display.flip()
-    screen.blit(enemy_char[0], main_Char[1])
+    screen.blit(enemy_char[0], enemy_char[1])
     pygame.display.flip()
