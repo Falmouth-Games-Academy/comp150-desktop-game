@@ -74,19 +74,4 @@ while not done:
                 pygame.display.flip()
                 map_generated = True
 
-
-    idle = pygame.image.load("idle1.png"),
-    runningframeone = pygame.image.load("running1.png")
-    runningframetwo = pygame.image.load("running2.png")
-    runningframethree = pygame.image.load("running3.png")
-    runningframefour = pygame.image.load("running4.png")
-    runningframefive = pygame.image.load("running5.png")
-    runningframesix  = pygame.image.load("running6.png")
-
-
-
-
-
-
-
-    pygame.display.update()
+                pygame.display.update()
