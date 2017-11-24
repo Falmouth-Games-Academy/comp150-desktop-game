@@ -22,6 +22,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, (current_pos_x, current_pos_y)):
         pygame.sprite.Sprite.__init__(self)
 
+
         self.dead = False
         self.win = False
         self.lose = False
@@ -61,9 +62,16 @@ class Player(pygame.sprite.Sprite):
         self.player_image_dead = pygame.image.load('spr_player_dead.png').convert_alpha()
         self.boost_image = pygame.image.load('boost.png').convert_alpha()
         self.player_image_rect = pygame.Surface([32, 32])
+
+        # this loads the win and lose images
         self.win_image = pygame.image.load('map_tiles/win.png').convert_alpha()
         self.lose_image = pygame.image.load('map_tiles/lose.png').convert_alpha()
 
+        # this loads the thruster images
+        self.thruster_up = pygame.image.load('map_tiles/thruster_up.png').convert_alpha()
+        self.thruster_down = pygame.image.load('map_tiles/thruster_down.png').convert_alpha()
+        self.thruster_left = pygame.image.load('map_tiles/thruster_left.png').convert_alpha()
+        self.thruster_right = pygame.image.load('map_tiles/thruster_right.png').convert_alpha()
 
     def render(self, screen):
         self.rect = self.player_image_rect.get_rect()
@@ -74,17 +82,26 @@ class Player(pygame.sprite.Sprite):
 
         if self.lose == True:
             screen.blit(self.lose_image, (screen_width / 3 , screen_height / 3))
-
         if self.win == True:
             screen.blit(self.win_image, (screen_width / 3 , screen_height / 3))
 
-        if self.dead == True:
-          
-            screen.blit(self.player_image_dead, (self.pos.x, self.pos.y))
-            
-        else:
 
+        if self.dead == True:
+            screen.blit(self.player_image_dead, (self.pos.x, self.pos.y))
+        else:
             screen.blit(self.player_image, (self.pos.x, self.pos.y))
+
+        # this blits the thrusters onto the screen
+        pressed_keys = pygame.key.get_pressed()
+        if (pressed_keys[K_w] or pressed_keys[K_UP]) and self.dead == False:
+            screen.blit(self.thruster_up, (self.pos.x + 16, self.pos.y + 48))
+        if (pressed_keys[K_s] or pressed_keys[K_DOWN]) and self.dead == False:
+            screen.blit(self.thruster_down, (self.pos.x + 16, self.pos.y - 32))
+        if (pressed_keys[K_a] or pressed_keys[K_LEFT]) and self.dead == False:
+            screen.blit(self.thruster_left, (self.pos.x + 50, self.pos.y + 16))
+        if (pressed_keys[K_d] or pressed_keys[K_RIGHT]) and self.dead == False:
+            screen.blit(self.thruster_right, (self.pos.x - 36, self.pos.y + 16))
+
 
     def vision_mechanic(self, Dtime):
         display_size = (screen_width, screen_height)
