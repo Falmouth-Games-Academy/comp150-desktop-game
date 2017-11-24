@@ -13,10 +13,9 @@ class Player(pygame.sprite.Sprite):
     speed_limit = 5
     milliseconds = 100
     milliseconds_boost = 2000
-    dead = False
 
     counter = 0
-    MAX_VISION_RADIUS = 200
+    MAX_VISION_RADIUS = 180
     VISION_SPEED = 40
 
     def __init__(self, (current_pos_x, current_pos_y)):
@@ -58,20 +57,20 @@ class Player(pygame.sprite.Sprite):
         self.time_elapsed_since_last_action_boost += self.dt_boost
     # code for rendering the player
 
-        self.player_image = pygame.image.load('spr_player.png').convert_alpha()
-        self.player_image_dead = pygame.image.load('spr_player_dead.png').convert_alpha()
-        self.boost_image = pygame.image.load('boost.png').convert_alpha()
+        self.player_image = pygame.image.load('image_files/spr_player.png').convert_alpha()
+        self.player_image_dead = pygame.image.load('image_files/spr_player_dead.png').convert_alpha()
+        self.boost_image = pygame.image.load('image_files/boost.png').convert_alpha()
         self.player_image_rect = pygame.Surface([32, 32])
 
         # this loads the win and lose images
-        self.win_image = pygame.image.load('map_tiles/win.png').convert_alpha()
-        self.lose_image = pygame.image.load('map_tiles/lose.png').convert_alpha()
+        self.win_image = pygame.image.load('image_files/win.png').convert_alpha()
+        self.lose_image = pygame.image.load('image_files/lose.png').convert_alpha()
 
         # this loads the thruster images
-        self.thruster_up = pygame.image.load('map_tiles/thruster_up.png').convert_alpha()
-        self.thruster_down = pygame.image.load('map_tiles/thruster_down.png').convert_alpha()
-        self.thruster_left = pygame.image.load('map_tiles/thruster_left.png').convert_alpha()
-        self.thruster_right = pygame.image.load('map_tiles/thruster_right.png').convert_alpha()
+        self.thruster_up = pygame.image.load('image_files/thruster_up.png').convert_alpha()
+        self.thruster_down = pygame.image.load('image_files/thruster_down.png').convert_alpha()
+        self.thruster_left = pygame.image.load('image_files/thruster_left.png').convert_alpha()
+        self.thruster_right = pygame.image.load('image_files/thruster_right.png').convert_alpha()
 
     def render(self, screen):
         self.rect = self.player_image_rect.get_rect()
@@ -110,17 +109,14 @@ class Player(pygame.sprite.Sprite):
         darkness = pygame.Surface(display_size)
         screen.blit(darkness, (0, 0))
 
-
         vision_radius = 0
-
-
 
         if self.counter <= self.MAX_VISION_RADIUS:
             vision_radius = self.counter
         elif self.counter <= self.MAX_VISION_RADIUS * 2:
-            vision_radius = self.MAX_VISION_RADIUS * 2 - self.counter
-        else:
+            vision_radius = 0
             self.counter = 0
+
         self.counter += self.VISION_SPEED * Dtime
 
         pygame.draw.circle(darkness, (0, 0, 1), (int(self.pos.x + 25), int(self.pos.y) + 25), int(vision_radius))
@@ -223,17 +219,12 @@ class Player(pygame.sprite.Sprite):
         for wall in wall_list:
             if collision_rect.colliderect(wall.rect):
                 if self.speed_h > 4.0:
-                    # can replace with explosion animation sound etc and level restart
                     self.player_death()
-                    print "DEAD"
                 if self.speed_h < -4.0:
-                    print "DEAD"
                     self.player_death()
                 if self.speed_v > 4.0:
-                    print "DEAD"
                     self.player_death()
                 if self.speed_v < -4.0:
-                    print "DEAD"
                     self.player_death()
 
                 # bounces player off of wall when colliding

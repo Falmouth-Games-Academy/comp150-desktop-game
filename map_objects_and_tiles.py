@@ -15,7 +15,7 @@ class Wall(pygame.sprite.Sprite):
         self.image = pygame.Surface([64, 64])
         self.rect = self.image.get_rect()
         self.rect.center = (self.pos.x + 32, self.pos.y + 32)
-        self.wall_image = pygame.image.load('map_tiles/wall_tile.png').convert_alpha()
+        self.wall_image = pygame.image.load('image_files/wall_tile.png').convert_alpha()
 
     def render(self, screen):
         screen.blit(self.wall_image, (self.pos.x, self.pos.y))
@@ -34,7 +34,7 @@ class Door(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (self.pos.x + 32, self.pos.y + 32)
         self.sides_positions = self.list_of_sides
-        self.wall_image = pygame.image.load('map_tiles/floor_tile.png').convert_alpha()
+        self.wall_image = pygame.image.load('image_files/floor_tile.png').convert_alpha()
 
     def render(self, screen):
         screen.blit(self.wall_image, (self.pos.x, self.pos.y))
@@ -47,7 +47,7 @@ class Floor(pygame.sprite.Sprite):
     def __init__(self, current_pos_x, current_pos_y):
         pygame.sprite.Sprite.__init__(self)
         self.pos = Vector2(current_pos_x, current_pos_y)
-        self.floor_image = pygame.image.load('map_tiles/floor_tile.png').convert_alpha()
+        self.floor_image = pygame.image.load('image_files/floor_tile.png').convert_alpha()
 
     def render(self, screen):
         screen.blit(self.floor_image, (self.pos.x, self.pos.y))
@@ -60,7 +60,7 @@ class PlayerSpawnTile(pygame.sprite.Sprite):
     def __init__(self, current_pos_x, current_pos_y):
         pygame.sprite.Sprite.__init__(self)
         self.pos = Vector2(current_pos_x, current_pos_y)
-        self.player_image = pygame.image.load('map_tiles/floor_tile.png').convert_alpha()
+        self.player_image = pygame.image.load('image_files/floor_tile.png').convert_alpha()
 
     def render(self, screen):
         screen.blit(self.player_image, (self.pos.x, self.pos.y))
@@ -76,7 +76,7 @@ class PlayerWinTile(pygame.sprite.Sprite):
         self.image = pygame.Surface([64, 64])
         self.rect = self.image.get_rect()
         self.rect.center = (self.pos.x + 32, self.pos.y + 32)
-        self.win_tile_image = pygame.image.load('map_tiles/win_tile.png').convert_alpha()
+        self.win_tile_image = pygame.image.load('image_files/win_tile.png').convert_alpha()
 
     def render(self, screen):
         screen.blit(self.win_tile_image, (self.pos.x, self.pos.y))
@@ -90,7 +90,7 @@ class GravWell(pygame.sprite.Sprite):
         self.image = pygame.Surface([64, 64])
         self.rect = self.image.get_rect()
         self.rect.center = (self.pos.x + 32, self.pos.y + 32)
-        self.grav_well_image = pygame.image.load('map_tiles/grav_well_tile.png').convert_alpha()
+        self.grav_well_image = pygame.image.load('image_files/grav_well_tile.png').convert_alpha()
         
     def render(self, screen):
         # holds the variable for lasers and the function to render it as well as turning the lazer on and off
@@ -106,8 +106,8 @@ class Laser(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = (self.pos.x + 4, self.pos.y + 64)
 
-        self.image_0 = pygame.image.load('map_tiles/laser_tile_on.png')
-        self.image_1 = pygame.image.load('map_tiles/laser_tile_off.png')
+        self.image_0 = pygame.image.load('image_files/laser_tile_on.png')
+        self.image_1 = pygame.image.load('image_files/laser_tile_off.png')
         self.time_target = 100
         self.time_num = 0
         self.current_image = 0
