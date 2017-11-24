@@ -2,11 +2,11 @@ import pygame
 from player_class import *
 Vector2 = pygame.math.Vector2
 
-'''this file defines all classes used in the map genreator '''
-
-# holds the variable for walls and the function to render it
+'''This file defines all classes used in the map genreator '''
 
 
+
+'''This holds the variable for the wall tiles and the function to render it'''
 class Wall(pygame.sprite.Sprite):
 
     def __init__(self, (current_pos_x, current_pos_y)):
@@ -20,9 +20,8 @@ class Wall(pygame.sprite.Sprite):
     def render(self, screen):
         screen.blit(self.wall_image, (self.pos.x, self.pos.y))
 
-# holds the variable for door and the function to render it
 
-
+'''This holds the variable for the door tile and the function to render it'''
 class Door(pygame.sprite.Sprite):
 
     list_of_sides = ["top", "bottom", "left", "right"]
@@ -39,9 +38,9 @@ class Door(pygame.sprite.Sprite):
     def render(self, screen):
         screen.blit(self.wall_image, (self.pos.x, self.pos.y))
 
-# holds the variable for floor tiles and the function to render it
 
 
+'''This holds the variable for the floor tiles and the function to render it'''
 class Floor(pygame.sprite.Sprite):
 
     def __init__(self, current_pos_x, current_pos_y):
@@ -52,9 +51,9 @@ class Floor(pygame.sprite.Sprite):
     def render(self, screen):
         screen.blit(self.floor_image, (self.pos.x, self.pos.y))
 
-# holds the variable for the spawn tile and the function to render it
 
 
+'''This holds the variable for the spawn tile and the function to render it'''
 class PlayerSpawnTile(pygame.sprite.Sprite):
 
     def __init__(self, current_pos_x, current_pos_y):
@@ -65,9 +64,9 @@ class PlayerSpawnTile(pygame.sprite.Sprite):
     def render(self, screen):
         screen.blit(self.player_image, (self.pos.x, self.pos.y))
 
-# holds the variable for the gravity well and the function to render it
 
-
+'''This holds the variable for the winning goal tile and the function to
+render it'''
 class PlayerWinTile(pygame.sprite.Sprite):
 
     def __init__(self, (current_pos_x, current_pos_y)):
@@ -82,6 +81,7 @@ class PlayerWinTile(pygame.sprite.Sprite):
         screen.blit(self.win_tile_image, (self.pos.x, self.pos.y))
 
 
+'''This holds the variable for the gravity well and the function to render it'''
 class GravWell(pygame.sprite.Sprite):
 
     def __init__(self, (current_pos_x, current_pos_y)):
@@ -93,10 +93,11 @@ class GravWell(pygame.sprite.Sprite):
         self.grav_well_image = pygame.image.load('image_files/grav_well_tile.png').convert_alpha()
         
     def render(self, screen):
-        # holds the variable for lasers and the function to render it as well as turning the lazer on and off
+
         screen.blit(self.grav_well_image, (self.pos.x, self.pos.y))
 
-
+'''This holds the variable for lasers and the function to render it as well as
+ turning the laser on and off'''
 class Laser(pygame.sprite.Sprite):
 
     def __init__(self, (current_pos_x, current_pos_y)):
