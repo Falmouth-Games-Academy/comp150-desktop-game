@@ -10,17 +10,15 @@ clock = pygame.time.Clock()
 
 
 class Player(pygame.sprite.Sprite):
-    speed_limit = 5
     milliseconds = 100
     milliseconds_boost = 2000
 
     counter = 0
     MAX_VISION_RADIUS = 180
-    VISION_SPEED = 40
+    VISION_SPEED = 25
 
     def __init__(self, (current_pos_x, current_pos_y)):
         pygame.sprite.Sprite.__init__(self)
-
 
         self.dead = False
         self.win = False
@@ -28,6 +26,7 @@ class Player(pygame.sprite.Sprite):
 
         self.speed_h = 0
         self.speed_v = 0
+        self.speed_limit = 5
         self.increase = 0.1
         self.boost = False
         self.pos = Vector2(current_pos_x, current_pos_y)
@@ -74,18 +73,19 @@ class Player(pygame.sprite.Sprite):
 
     def render(self, screen):
         self.rect = self.player_image_rect.get_rect()
+
         self.rect.center = (self.pos.x + 26, self.pos.y + 26)
         # boost UI element
-        if self.boost == True:
+        if self.boost:
             screen.blit(self.boost_image, (screen_width / 2 , screen_height - 64))
 
-        if self.lose == True:
+        if self.lose:
             screen.blit(self.lose_image, (screen_width / 3 , screen_height / 3))
-        if self.win == True:
+
+        if self.win:
             screen.blit(self.win_image, (screen_width / 3 , screen_height / 3))
 
-
-        if self.dead == True:
+        if self.dead:
             screen.blit(self.player_image_dead, (self.pos.x, self.pos.y))
         else:
             screen.blit(self.player_image, (self.pos.x, self.pos.y))
@@ -101,10 +101,8 @@ class Player(pygame.sprite.Sprite):
         if (pressed_keys[K_d] or pressed_keys[K_RIGHT]) and self.dead == False:
             screen.blit(self.thruster_right, (self.pos.x - 36, self.pos.y + 16))
 
-
     def vision_mechanic(self, Dtime):
         display_size = (screen_width, screen_height)
-
 
         darkness = pygame.Surface(display_size)
         screen.blit(darkness, (0, 0))
@@ -218,13 +216,13 @@ class Player(pygame.sprite.Sprite):
         collision_rect.bottom += self.speed_v
         for wall in wall_list:
             if collision_rect.colliderect(wall.rect):
-                if self.speed_h > 4.0:
+                if self.speed_h > 3.5:
                     self.player_death()
-                if self.speed_h < -4.0:
+                if self.speed_h < -3.5:
                     self.player_death()
-                if self.speed_v > 4.0:
+                if self.speed_v > 3.5:
                     self.player_death()
-                if self.speed_v < -4.0:
+                if self.speed_v < -3.5:
                     self.player_death()
 
                 # bounces player off of wall when colliding
@@ -244,6 +242,7 @@ class Player(pygame.sprite.Sprite):
 
     def collide_grav_well(self, grav_well_list):
         # creates a temporary rect that moves where the player moves
+        slow_down_rate = 0.92
         collision_rect = self.rect
         collision_rect.left += self.speed_h
         collision_rect.right += self.speed_h
@@ -251,37 +250,35 @@ class Player(pygame.sprite.Sprite):
         collision_rect.bottom += self.speed_v
         for grav_well in grav_well_list:
             if collision_rect.colliderect(grav_well.rect):
-                self.speed_limit = 0.5
-            else:
-                self.speed_limit = 5.0
+                self.speed_h *= slow_down_rate
+                self.speed_v *= slow_down_rate
 
     '''Winning tile collision function'''
 
-    def collide_win_tile(self, win_tile_list):
+    def collide_win_tile(self, win_tiles):
         # creates a temporary rect that moves where the player moves
         collision_rect = self.rect
         collision_rect.left += self.speed_h
         collision_rect.right += self.speed_h
         collision_rect.top += self.speed_v
         collision_rect.bottom += self.speed_v
-        for win_tile in win_tile_list:
-            if collision_rect.colliderect(win_tile.rect):
+        for win_tile in win_tiles:
+            if collision_rect.colliderect(win_tile.rect) and not self.dead:
                 self.win = True
 
     '''Laser collision function'''
 
-    def collide_laser(self, laser_list):
+    def collide_laser(self, lasers):
         # creates a temporary rect that moves where the player moves
         collision_rect = self.rect
         collision_rect.left += self.speed_h
         collision_rect.right += self.speed_h
         collision_rect.top += self.speed_v
         collision_rect.bottom += self.speed_v
-        for laser in laser_list:
+        for laser in lasers:
             if collision_rect.colliderect(laser.rect):
                 if laser.current_image == 0:
                     self.player_death()
-
 
     def player_death(self):
         self.dead = True

@@ -67,8 +67,9 @@ class PlayerSpawnTile(pygame.sprite.Sprite):
 
 '''This holds the variable for the winning goal tile and the function to
 render it'''
-class PlayerWinTile(pygame.sprite.Sprite):
 
+
+class PlayerWinTile(pygame.sprite.Sprite):
     def __init__(self, (current_pos_x, current_pos_y)):
         pygame.sprite.Sprite.__init__(self)
         self.pos = Vector2(current_pos_x, current_pos_y)
@@ -82,8 +83,9 @@ class PlayerWinTile(pygame.sprite.Sprite):
 
 
 '''This holds the variable for the gravity well and the function to render it'''
-class GravWell(pygame.sprite.Sprite):
 
+
+class GravWell(pygame.sprite.Sprite):
     def __init__(self, (current_pos_x, current_pos_y)):
         pygame.sprite.Sprite.__init__(self)
         self.pos = Vector2(current_pos_x, current_pos_y)
@@ -93,13 +95,14 @@ class GravWell(pygame.sprite.Sprite):
         self.grav_well_image = pygame.image.load('image_files/grav_well_tile.png').convert_alpha()
         
     def render(self, screen):
-
         screen.blit(self.grav_well_image, (self.pos.x, self.pos.y))
+
 
 '''This holds the variable for lasers and the function to render it as well as
  turning the laser on and off'''
-class Laser(pygame.sprite.Sprite):
 
+
+class Laser(pygame.sprite.Sprite):
     def __init__(self, (current_pos_x, current_pos_y)):
         pygame.sprite.Sprite.__init__(self)
         self.pos = Vector2(current_pos_x, current_pos_y)
