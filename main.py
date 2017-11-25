@@ -17,7 +17,9 @@ player = Player(generate_a_map.player_spawn_pos)
 toggle_state = False
 
 running = True
-time1= 0.00
+time1 = 0.00
+
+
 while running:
     time2 = time1
     time1 = time.clock()
@@ -31,9 +33,13 @@ while running:
             running = False
         if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
             generate_a_map()
+            player = Player(generate_a_map.player_spawn_pos)
+
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_m:
+            generate_a_map()
 
         # toggle between vision
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_e:
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_n:
             toggle_state = not toggle_state
 
     if not toggle_state:
