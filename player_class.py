@@ -15,7 +15,7 @@ class Player(pygame.sprite.Sprite):
 
     counter = 0
     MAX_VISION_RADIUS = 180
-    VISION_SPEED = 25
+    VISION_SPEED = 30
 
     def __init__(self, (current_pos_x, current_pos_y)):
         pygame.sprite.Sprite.__init__(self)
@@ -27,7 +27,7 @@ class Player(pygame.sprite.Sprite):
         self.speed_h = 0
         self.speed_v = 0
         self.speed_limit = 5
-        self.increase = 0.1
+        self.increase = 0.2
         self.boost = False
         self.pos = Vector2(current_pos_x, current_pos_y)
 
@@ -216,6 +216,7 @@ class Player(pygame.sprite.Sprite):
         collision_rect.bottom += self.speed_v
         for wall in wall_list:
             if collision_rect.colliderect(wall.rect):
+                # player explodes if he hits a wall at speed
                 if self.speed_h > 3.5:
                     self.player_death()
                 if self.speed_h < -3.5:
