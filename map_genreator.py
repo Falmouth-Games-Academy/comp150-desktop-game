@@ -12,13 +12,14 @@ grav_well_list = []
 laser_list = []
 win_tile_list = []
 
+''' Main function that goes through different processes in order to create a new random map for the player to explore'''
 
-''' Creates a random map matrix with rules'''
 
 def generate_a_map():
     pos_x = 0
     pos_y = 0
 
+    # This is what creates the map matrix array by using the numpy.random function from the numpy library
     map_matrix = numpy.random.randint(6, size=(screen_height / 64, screen_width / 64))
     player_spawn = False
     win_tile = False
@@ -30,17 +31,17 @@ def generate_a_map():
 
     generate_a_map.player_spawn_pos = (0, 0)
 
-
+    # This for loop goes through each number in the map matrix array and applies rules to it
     for row_num, row_list in enumerate(map_matrix):
         for tile_num in enumerate(row_list):
-            # gets the postison of the tile above and the tile to the left
-            tile_above = (row_num - 1, tile_num[0])
+
+            # gets the position of the tile above and the tile to the left
             tile_left = (row_num, tile_num[0] - 1)
             current_pos = (row_num, tile_num[0])
 
             # IF statement rules to apply to the map matrix
             if row_num == 0 or row_num == screen_height / 64 - 1 or tile_num[0] == 0 \
-            or tile_num[0] == screen_width / 64 -1:
+                    or tile_num[0] == screen_width / 64 - 1:
                 map_matrix.itemset(current_pos, 1)
 
             elif random.random() < 0.3 and map_matrix.item(tile_left) == 1:
@@ -52,36 +53,41 @@ def generate_a_map():
             elif random.random() < 0.75 and tile_num[1] == 4:
                 map_matrix.itemset(current_pos, 0)
 
-            elif random.random() < 0.6 or (player_spawn == True and tile_num[1] == 2):
+            elif random.random() < 0.6 or (player_spawn and tile_num[1] == 2):
                 map_matrix.itemset(current_pos, 0)
 
-            elif tile_num[1] == 5 and win_tile == False:
+            elif tile_num[1] == 5 and not win_tile:
                 map_matrix.itemset(current_pos, 5)
                 win_tile = True
 
-            elif tile_num[1] == 5 and win_tile == True:
+            elif tile_num[1] == 5 and win_tile:
                 map_matrix.itemset(current_pos, 0)
 
             elif random.random() < 0.1:
                 map_matrix.itemset(current_pos, 4)
 
-            elif random.random() < 0.3 and player_spawn == False:
+            elif random.random() < 0.3 and not player_spawn:
                 map_matrix.itemset(current_pos, 2)
                 player_spawn = True
 
     print map_matrix
 
+    # These lists need to be deleted before creating a new map so the old colliders don't stick around
     del wall_list[:]
     del grav_well_list[:]
     del laser_list[:]
     del win_tile_list[:]
-# Creates the map image from the map matrix
+
+    '''Creates the map image from the map matrix by checking each number
+    in the matrix array and blitting the equivalent tile image to map position'''
+
     for row_num, row_list in enumerate(map_matrix):
         for tile_num in enumerate(row_list):
             floor = Floor(pos_x, pos_y)
             player_tile = PlayerSpawnTile(pos_x, pos_y)
 
             # render all images made in map objects and tiles
+            # If statements that will
 
             if tile_num[1] == 1:
                 generate_a_map.wall_pos = (pos_x, pos_y)
@@ -123,9 +129,12 @@ def generate_a_map():
         pos_x = 0
 
 
+# function to render the map image to the screen, this gets called in the main
 def render_map():
     screen.blit(map_image, (0, 0))
 
+
+# function to render the lasers on the map, this gets called in player_class
 def render_lasers():
     for laser in laser_list:
         laser.update(screen)
