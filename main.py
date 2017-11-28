@@ -3,13 +3,13 @@ from screen_settings import *
 from player_class import *
 from map_genreator import *
 import time
+
 # initiate pygame
 pygame.init()
 
 # limiting the FPS with this fps clock
 FPS = 60
 fpsClock = pygame.time.Clock()
-
 
 generate_a_map()
 player = Player(generate_a_map.player_spawn_pos)
@@ -18,7 +18,6 @@ toggle_state = False
 
 running = True
 time1 = 0.00
-
 
 while running:
     time2 = time1
