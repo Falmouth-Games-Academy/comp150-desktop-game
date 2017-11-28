@@ -3,9 +3,9 @@ from player_class import *
 
 Vector2 = pygame.math.Vector2
 
-'''This file defines all classes used in the map genreator '''
+'''This file defines all classes used in the map generator '''
 
-'''This holds the variable for the wall tiles and the function to render it'''
+'''This holds the variable for the wall tiles and the functions to render it'''
 
 
 class Wall(pygame.sprite.Sprite):
