@@ -4,18 +4,15 @@ from screen_settings import *
 from map_genreator import *
 from map_objects_and_tiles import *
 
-Vector2 = pygame.math.Vector2
-clock = pygame.time.Clock()
-'''defines the player class'''
+'''This defines the player class'''
 
 
 class Player(pygame.sprite.Sprite):
     milliseconds = 100
     milliseconds_boost = 2000
-
     counter = 0
-    MAX_VISION_RADIUS = 180
-    VISION_SPEED = 30
+    max_vision_radius = 180
+    vision_speed = 30
 
     def __init__(self, (current_pos_x, current_pos_y)):
         pygame.sprite.Sprite.__init__(self)
@@ -27,15 +24,15 @@ class Player(pygame.sprite.Sprite):
         self.speed_h = 0
         self.speed_v = 0
         self.speed_limit = 5
-        self.increase = 0.2
+        self.speed_increase = 0.2
         self.boost = False
         self.pos = Vector2(current_pos_x, current_pos_y)
 
-        self.time_elapsed_since_last_action_up = 0
-        self.time_elapsed_since_last_action_down = 0
-        self.time_elapsed_since_last_action_left = 0
-        self.time_elapsed_since_last_action_right = 0
-        self.time_elapsed_since_last_action_boost = 0
+        self.time_since_last_event_up = 0
+        self.time_since_last_event_down = 0
+        self.time_since_last_event_left = 0
+        self.time_since_last_event_right = 0
+        self.time_since_last_event_boost = 0
 
         self.clock_up = pygame.time.Clock()
         self.clock_down = pygame.time.Clock()
@@ -43,33 +40,21 @@ class Player(pygame.sprite.Sprite):
         self.clock_right = pygame.time.Clock()
         self.clock_boost = pygame.time.Clock()
 
-        self.dt_up = self.clock_up.tick()
-        self.dt_down = self.clock_down.tick()
-        self.dt_left = self.clock_left.tick()
-        self.dt_right = self.clock_right.tick()
-        self.dt_boost = self.clock_boost.tick()
-
-        self.time_elapsed_since_last_action_up += self.dt_up
-        self.time_elapsed_since_last_action_down += self.dt_down
-        self.time_elapsed_since_last_action_left += self.dt_left
-        self.time_elapsed_since_last_action_right += self.dt_right
-        self.time_elapsed_since_last_action_boost += self.dt_boost
-    # code for rendering the player
-
-        self.player_image = pygame.image.load('image_files/spr_player.png').convert_alpha()
-        self.player_image_dead = pygame.image.load('image_files/spr_player_dead.png').convert_alpha()
-        self.boost_image = pygame.image.load('image_files/boost.png').convert_alpha()
+        # code for rendering the player
+        self.player_image = pygame.image.load('image_files/spr_player.png')
+        self.player_image_dead = pygame.image.load('image_files/spr_player_dead.png')
+        self.boost_ui_image = pygame.image.load('image_files/boost.png')
         self.player_image_rect = pygame.Surface([32, 32])
 
         # this loads the win and lose images
-        self.win_image = pygame.image.load('image_files/win.png').convert_alpha()
-        self.lose_image = pygame.image.load('image_files/lose.png').convert_alpha()
+        self.win_image = pygame.image.load('image_files/win.png')
+        self.lose_image = pygame.image.load('image_files/lose.png')
 
-        # this loads the thruster images
-        self.thruster_up = pygame.image.load('image_files/thruster_up.png').convert_alpha()
-        self.thruster_down = pygame.image.load('image_files/thruster_down.png').convert_alpha()
-        self.thruster_left = pygame.image.load('image_files/thruster_left.png').convert_alpha()
-        self.thruster_right = pygame.image.load('image_files/thruster_right.png').convert_alpha()
+        # this loads the thruster images, named based on movement direction
+        self.thruster_up = pygame.image.load('image_files/thruster_up.png')
+        self.thruster_down = pygame.image.load('image_files/thruster_down.png')
+        self.thruster_left = pygame.image.load('image_files/thruster_left.png')
+        self.thruster_right = pygame.image.load('image_files/thruster_right.png')
 
     def render(self, screen):
         self.rect = self.player_image_rect.get_rect()
@@ -77,13 +62,13 @@ class Player(pygame.sprite.Sprite):
         self.rect.center = (self.pos.x + 26, self.pos.y + 26)
         # boost UI element
         if self.boost:
-            screen.blit(self.boost_image, (screen_width / 2 , screen_height - 64))
+            screen.blit(self.boost_ui_image, (screen_width / 2, screen_height - 64))
 
         if self.lose:
-            screen.blit(self.lose_image, (screen_width / 3 , screen_height / 3))
+            screen.blit(self.lose_image, (screen_width / 3, screen_height / 3))
 
         if self.win:
-            screen.blit(self.win_image, (screen_width / 3 , screen_height / 3))
+            screen.blit(self.win_image, (screen_width / 3, screen_height / 3))
 
         if self.dead:
             screen.blit(self.player_image_dead, (self.pos.x, self.pos.y))
@@ -92,34 +77,33 @@ class Player(pygame.sprite.Sprite):
 
         # this blits the thrusters onto the screen
         pressed_keys = pygame.key.get_pressed()
-        if (pressed_keys[K_w] or pressed_keys[K_UP]) and self.dead == False:
+        if (pressed_keys[K_w] or pressed_keys[K_UP]) and not self.dead:
             screen.blit(self.thruster_up, (self.pos.x + 16, self.pos.y + 48))
-        if (pressed_keys[K_s] or pressed_keys[K_DOWN]) and self.dead == False:
+        if (pressed_keys[K_s] or pressed_keys[K_DOWN]) and not self.dead:
             screen.blit(self.thruster_down, (self.pos.x + 16, self.pos.y - 32))
-        if (pressed_keys[K_a] or pressed_keys[K_LEFT]) and self.dead == False:
+        if (pressed_keys[K_a] or pressed_keys[K_LEFT]) and not self.dead:
             screen.blit(self.thruster_left, (self.pos.x + 50, self.pos.y + 16))
-        if (pressed_keys[K_d] or pressed_keys[K_RIGHT]) and self.dead == False:
+        if (pressed_keys[K_d] or pressed_keys[K_RIGHT]) and not self.dead:
             screen.blit(self.thruster_right, (self.pos.x - 36, self.pos.y + 16))
 
     def vision_mechanic(self, Dtime):
         display_size = (screen_width, screen_height)
-
         darkness = pygame.Surface(display_size)
         screen.blit(darkness, (0, 0))
-
         vision_radius = 0
 
-        if self.counter <= self.MAX_VISION_RADIUS:
+        if self.counter <= self.max_vision_radius:
             vision_radius = self.counter
-        elif self.counter <= self.MAX_VISION_RADIUS * 2:
+        elif self.counter <= self.max_vision_radius * 2:
             vision_radius = 0
             self.counter = 0
 
-        self.counter += self.VISION_SPEED * Dtime
+        self.counter += self.vision_speed * Dtime
 
-        pygame.draw.circle(darkness, (0, 0, 1), (int(self.pos.x + 25), int(self.pos.y) + 25), int(vision_radius))
+        pygame.draw.circle(darkness, (0, 0, 1), (int(self.pos.x + 25),
+                                                 int(self.pos.y) + 25),
+                           int(vision_radius))
         darkness.set_colorkey((0, 0, 1))
-
         screen.blit(map_image, (self.pos.x - 200 + 32, self.pos.y - 200 + 32),
                     (self.pos.x - 200 + 32, self.pos.y - 200 + 32, 400, 400))
         render_lasers()
@@ -135,54 +119,57 @@ class Player(pygame.sprite.Sprite):
         self.dt_right = self.clock_right.tick()
         self.dt_boost = self.clock_boost.tick()
 
-        self.time_elapsed_since_last_action_up += self.dt_up
-        self.time_elapsed_since_last_action_down += self.dt_down
-        self.time_elapsed_since_last_action_left += self.dt_left
-        self.time_elapsed_since_last_action_right += self.dt_right
-        self.time_elapsed_since_last_action_boost += self.dt_boost
+        self.time_since_last_event_up += self.dt_up
+        self.time_since_last_event_down += self.dt_down
+        self.time_since_last_event_left += self.dt_left
+        self.time_since_last_event_right += self.dt_right
+        self.time_since_last_event_boost += self.dt_boost
 
         # when the player dies this If statement disables control over the player.
         if not self.dead:
-
             # movement up
             # clocks limit the number of events that take place when keys are pressed
-            if self.time_elapsed_since_last_action_up > self.milliseconds:
+            if self.time_since_last_event_up > self.milliseconds:
                 if pressed_keys[K_w] or pressed_keys[K_UP]:
-                    self.speed_v -= self.increase
+                    self.speed_v -= self.speed_increase
                     # reset clock
-                    self.time_elapsed_since_last_action_up = 0
+                    self.time_since_last_event_up = 0
                     # set an upward speed limit
-            if (pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]) and (pressed_keys[K_w] or pressed_keys[K_UP]):
+            if (pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]) and \
+                    (pressed_keys[K_w] or pressed_keys[K_UP]):
                 self.speed_v -= self.boost
             if self.speed_v <= - self.speed_limit:
                 self.speed_v = - self.speed_limit
 
             # movement down
-            if self.time_elapsed_since_last_action_down > self.milliseconds:
+            if self.time_since_last_event_down > self.milliseconds:
                 if pressed_keys[K_s] or pressed_keys[K_DOWN]:
-                    self.speed_v += self.increase
-                    self.time_elapsed_since_last_action_down = 0
-            if (pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]) and (pressed_keys[K_s] or pressed_keys[K_DOWN]):
+                    self.speed_v += self.speed_increase
+                    self.time_since_last_event_down = 0
+            if (pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]) and \
+                    (pressed_keys[K_s] or pressed_keys[K_DOWN]):
                 self.speed_v += self.boost
             if self.speed_v >= self.speed_limit:
                 self.speed_v = self.speed_limit
 
             # movement left
-            if self.time_elapsed_since_last_action_left > self.milliseconds:
+            if self.time_since_last_event_left > self.milliseconds:
                 if pressed_keys[K_a] or pressed_keys[K_LEFT]:
-                    self.speed_h -= self.increase
-                    self.time_elapsed_since_last_action_left = 0
-            if (pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]) and (pressed_keys[K_a] or pressed_keys[K_LEFT]):
+                    self.speed_h -= self.speed_increase
+                    self.time_since_last_event_left = 0
+            if (pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]) and \
+                    (pressed_keys[K_a] or pressed_keys[K_LEFT]):
                 self.speed_h -= self.boost
             if self.speed_h <= - self.speed_limit:
                 self.speed_h = - self.speed_limit
 
             # movement right
-            if self.time_elapsed_since_last_action_right > self.milliseconds:
+            if self.time_since_last_event_right > self.milliseconds:
                 if pressed_keys[K_d] or pressed_keys[K_RIGHT]:
-                    self.speed_h += self.increase
-                    self.time_elapsed_since_last_action_right = 0
-            if (pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]) and (pressed_keys[K_d] or pressed_keys[K_RIGHT]):
+                    self.speed_h += self.speed_increase
+                    self.time_since_last_event_right = 0
+            if (pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]) and \
+                    (pressed_keys[K_d] or pressed_keys[K_RIGHT]):
                 self.speed_h += self.boost
             if self.speed_h >= self.speed_limit:
                 self.speed_h = self.speed_limit
@@ -197,12 +184,14 @@ class Player(pygame.sprite.Sprite):
         self.pos.y += self.speed_v
 
         # boost mechanic
-        if self.time_elapsed_since_last_action_boost > self.milliseconds_boost:
+        if self.time_since_last_event_boost > self.milliseconds_boost:
             self.boost = 2
             self.boost = True
 
-            if (pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]) and (pressed_keys[K_w] or pressed_keys[K_s] or pressed_keys[K_a] or pressed_keys[K_d]):
-                self.time_elapsed_since_last_action_boost = 0
+            if (pressed_keys[K_LSHIFT] or pressed_keys[K_SPACE]) and \
+                    (pressed_keys[K_w] or pressed_keys[K_s] or
+                     pressed_keys[K_a] or pressed_keys[K_d]):
+                self.time_since_last_event_boost = 0
                 self.boost = 0
 
     '''Wall collision function'''
@@ -229,13 +218,10 @@ class Player(pygame.sprite.Sprite):
                 # bounces player off of wall when colliding
                 if self.rect.x < wall.rect.x:
                     self.speed_h = -(self.speed_h / 2)
-
                 elif self.rect.x > wall.rect.x:
                     self.speed_h = -(self.speed_h / 2)
-
                 if self.rect.y < wall.rect.y:
                     self.speed_v = -(self.speed_v / 2)
-
                 elif self.rect.y > wall.rect.y:
                     self.speed_v = -(self.speed_v / 2)
 
