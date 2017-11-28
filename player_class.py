@@ -4,6 +4,7 @@ from screen_settings import *
 from map_genreator import *
 from map_objects_and_tiles import *
 
+
 '''This defines the player class'''
 
 
@@ -41,20 +42,20 @@ class Player(pygame.sprite.Sprite):
         self.clock_boost = pygame.time.Clock()
 
         # code for rendering the player
-        self.player_image = pygame.image.load('image_files/spr_player.png')
-        self.player_image_dead = pygame.image.load('image_files/spr_player_dead.png')
-        self.boost_ui_image = pygame.image.load('image_files/boost.png')
+        self.player_image = pygame.image.load(texture_pack + '/spr_player.png')
+        self.player_image_dead = pygame.image.load(texture_pack + '/spr_player_dead.png')
+        self.boost_ui_image = pygame.image.load(texture_pack + '/boost.png')
         self.player_image_rect = pygame.Surface([32, 32])
 
         # this loads the win and lose images
-        self.win_image = pygame.image.load('image_files/win.png')
-        self.lose_image = pygame.image.load('image_files/lose.png')
+        self.win_image = pygame.image.load(texture_pack + '/win.png')
+        self.lose_image = pygame.image.load(texture_pack + '/lose.png')
 
         # this loads the thruster images, named based on movement direction
-        self.thruster_up = pygame.image.load('image_files/thruster_up.png')
-        self.thruster_down = pygame.image.load('image_files/thruster_down.png')
-        self.thruster_left = pygame.image.load('image_files/thruster_left.png')
-        self.thruster_right = pygame.image.load('image_files/thruster_right.png')
+        self.thruster_up = pygame.image.load(texture_pack + '/thruster_up.png')
+        self.thruster_down = pygame.image.load(texture_pack + '/thruster_down.png')
+        self.thruster_left = pygame.image.load(texture_pack + '/thruster_left.png')
+        self.thruster_right = pygame.image.load(texture_pack + '/thruster_right.png')
 
     def render(self, screen):
         self.rect = self.player_image_rect.get_rect()
