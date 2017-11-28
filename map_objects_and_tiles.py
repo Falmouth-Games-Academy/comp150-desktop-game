@@ -8,7 +8,7 @@ texture_pack = 'texture_pack_1'
 
 '''This file defines all classes used in the map generator'''
 
-'''This holds the variable for the wall tiles and the function to render it'''
+'''This holds the variable for the wall tiles and the functions to render it'''
 
 
 class Wall(pygame.sprite.Sprite):
