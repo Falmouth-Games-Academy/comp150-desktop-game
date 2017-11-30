@@ -1,24 +1,26 @@
 import pygame
 from player_class import *
 
-'''
+"""
 This File contains all the code, functions and classes for the
 different objects and tiles that appear in the random map.
-'''
+"""
 
 Vector2 = pygame.math.Vector2
 
-# can change between the available texture packs 1,2 and 3 respectively
-texture_pack = 'texture_pack_1'
+# You can change between the available texture packs 1,2 and 3 respectively.
+texture_pack = 'texture_pack_2'
 
-'''This file defines all classes used in the map generator'''
+"""This file defines all classes used in the map generator."""
 
-'''This holds the variable for the wall tiles and the functions to render it'''
+"""This holds the variable for the wall tiles and the functions to render it."""
 
 
 class Wall(pygame.sprite.Sprite):
     def __init__(self, (current_pos_x, current_pos_y)):
         pygame.sprite.Sprite.__init__(self)
+        # This creates an invisible rect for the player to interact with at
+        # each position a wall is created.
         self.pos = Vector2(current_pos_x, current_pos_y)
         self.image = pygame.Surface([64, 64])
         self.rect = self.image.get_rect()
@@ -29,7 +31,8 @@ class Wall(pygame.sprite.Sprite):
         screen.blit(self.wall_image, (self.pos.x, self.pos.y))
 
 
-'''This holds the variable for the door tile and the function to render it'''
+"""This holds the variable for the door tile and the function to render it
+(for future use, not used in current build)."""
 
 
 class Door(pygame.sprite.Sprite):
@@ -37,6 +40,8 @@ class Door(pygame.sprite.Sprite):
 
     def __init__(self, (current_pos_x, current_pos_y), side_positions):
         pygame.sprite.Sprite.__init__(self)
+        # This creates an invisible rect for the player to interact with at
+        # each position a door is created.
         self.pos = Vector2(current_pos_x, current_pos_y)
         self.image = pygame.Surface([64, 64])
         self.rect = self.image.get_rect()
@@ -48,7 +53,7 @@ class Door(pygame.sprite.Sprite):
         screen.blit(self.wall_image, (self.pos.x, self.pos.y))
 
 
-'''This holds the variable for the floor tiles and the function to render it'''
+"""This holds the variable for the floor tiles and the function to render it."""
 
 
 class Floor(pygame.sprite.Sprite):
@@ -61,7 +66,7 @@ class Floor(pygame.sprite.Sprite):
         screen.blit(self.floor_image, (self.pos.x, self.pos.y))
 
 
-'''This holds the variable for the spawn tile and the function to render it'''
+"""This holds the variable for the spawn tile and the function to render it."""
 
 
 class PlayerSpawnTile(pygame.sprite.Sprite):
@@ -74,13 +79,16 @@ class PlayerSpawnTile(pygame.sprite.Sprite):
         screen.blit(self.player_image, (self.pos.x, self.pos.y))
 
 
-'''This holds the variable for the winning goal tile and the function to
-render it'''
+"""This holds the variable for the winning goal tile and the function to
+render it.
+"""
 
 
 class PlayerWinTile(pygame.sprite.Sprite):
     def __init__(self, (current_pos_x, current_pos_y)):
         pygame.sprite.Sprite.__init__(self)
+        # This creates an invisible rect for the player to interact with at
+        # each position a win tile is created.
         self.pos = Vector2(current_pos_x, current_pos_y)
         self.image = pygame.Surface([64, 64])
         self.rect = self.image.get_rect()
@@ -91,12 +99,14 @@ class PlayerWinTile(pygame.sprite.Sprite):
         screen.blit(self.win_tile_image, (self.pos.x, self.pos.y))
 
 
-'''This holds the variable for the gravity well and the function to render it'''
+"""This holds the variable for the gravity well and the function to render it."""
 
 
 class GravWell(pygame.sprite.Sprite):
     def __init__(self, (current_pos_x, current_pos_y)):
         pygame.sprite.Sprite.__init__(self)
+        # This creates an invisible rect for the player to interact with at
+        # each position a gravity well is created.
         self.pos = Vector2(current_pos_x, current_pos_y)
         self.image = pygame.Surface([64, 64])
         self.rect = self.image.get_rect()
@@ -107,8 +117,8 @@ class GravWell(pygame.sprite.Sprite):
         screen.blit(self.grav_well_image, (self.pos.x, self.pos.y))
 
 
-'''This holds the variable for lasers and the function to render it as well as
- turning the laser on and off'''
+"""This holds the variable for lasers and the function to render it as well as
+turning the laser on and off."""
 
 
 class Laser(pygame.sprite.Sprite):
@@ -118,13 +128,15 @@ class Laser(pygame.sprite.Sprite):
         self.image = pygame.Surface([8, 128])
         self.rect = self.image.get_rect()
         self.rect.center = (self.pos.x + 4, self.pos.y + 64)
-
+        # This loads the laser images.
         self.image_0 = pygame.image.load(texture_pack + '/laser_tile_on.png')
         self.image_1 = pygame.image.load(texture_pack + '/laser_tile_off.png')
+        # This sets up the timer for the laser speed.
         self.time_target = 100
         self.time_num = 0
         self.current_image = 0
 
+    # This animates the laser.
     def update(self, screen):
         self.time_num += 1
         if self.time_num == self.time_target:

@@ -1,5 +1,3 @@
-import pygame
-from screen_settings import *
 from player_class import *
 from map_genreator import *
 import time
