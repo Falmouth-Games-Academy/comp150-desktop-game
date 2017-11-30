@@ -43,9 +43,8 @@ You escape destruction in the tutorial level and must use tmeporary vision to gu
 * Gravity well that attracts the player to it's centre destroying you, player must avoid getting sucked in by it.
 
 ### Bosses
-* Boss 1: Manufacturing robot arm that needs to be avoided and switched off to beat it.
-* Boss 2: 
-* Boss 3:
+* Boss idea 1: Manufacturing robot arm that needs to be avoided and switched off to beat it.
+
 
 ### UI and menus
 * Main menu when starting the game with buttons to play, settings, exit game, level select.
