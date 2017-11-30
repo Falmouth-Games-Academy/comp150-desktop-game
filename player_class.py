@@ -4,6 +4,9 @@ from screen_settings import *
 from map_genreator import *
 from map_objects_and_tiles import *
 
+'''
+This File contains all the code and functions for the player which is defined with it's own class.
+'''
 
 '''This defines the player class'''
 
@@ -57,6 +60,7 @@ class Player(pygame.sprite.Sprite):
         self.thruster_left = pygame.image.load(texture_pack + '/thruster_left.png')
         self.thruster_right = pygame.image.load(texture_pack + '/thruster_right.png')
 
+    # This function is used to render the player in different states
     def render(self, screen):
         self.rect = self.player_image_rect.get_rect()
 
@@ -87,6 +91,7 @@ class Player(pygame.sprite.Sprite):
         if (pressed_keys[K_d] or pressed_keys[K_RIGHT]) and not self.dead:
             screen.blit(self.thruster_right, (self.pos.x - 36, self.pos.y + 16))
 
+    # This function deals with the vision mechanic of the player
     def vision_mechanic(self, Dtime):
         display_size = (screen_width, screen_height)
         darkness = pygame.Surface(display_size)
@@ -107,9 +112,11 @@ class Player(pygame.sprite.Sprite):
         darkness.set_colorkey((0, 0, 1))
         screen.blit(map_image, (self.pos.x - 200 + 32, self.pos.y - 200 + 32),
                     (self.pos.x - 200 + 32, self.pos.y - 200 + 32, 400, 400))
+        # The laser needs to be rendered here in order to appear under the darkness and above the map image
         render_lasers()
         screen.blit(darkness, (0, 0))
 
+    # This function deals with player movement and allows the player to move
     def player_movement(self, wall, grav_well, laser, win_tile):
 
         pressed_keys = pygame.key.get_pressed()
@@ -196,7 +203,7 @@ class Player(pygame.sprite.Sprite):
                 self.boost = 0
 
     '''Wall collision function'''
-
+    # This function gives the player the ability to collide with walls
     def collide_wall(self, wall_list):
         # creates a temporary rect that moves where the player moves
         collision_rect = self.rect
@@ -227,7 +234,7 @@ class Player(pygame.sprite.Sprite):
                     self.speed_v = -(self.speed_v / 2)
 
     '''Gravity Well collision function'''
-
+    # This function slows down the player when colliding and moving through a gravity well
     def collide_grav_well(self, grav_well_list):
         # creates a temporary rect that moves where the player moves
         slow_down_rate = 0.92
@@ -242,7 +249,7 @@ class Player(pygame.sprite.Sprite):
                 self.speed_v *= slow_down_rate
 
     '''Winning tile collision function'''
-
+    # This function allows the player to win the game by going over a win tile
     def collide_win_tile(self, win_tiles):
         # creates a temporary rect that moves where the player moves
         collision_rect = self.rect
@@ -255,7 +262,7 @@ class Player(pygame.sprite.Sprite):
                 self.win = True
 
     '''Laser collision function'''
-
+    # This function kills the player if the player touches the red laser
     def collide_laser(self, lasers):
         # creates a temporary rect that moves where the player moves
         collision_rect = self.rect
@@ -268,6 +275,7 @@ class Player(pygame.sprite.Sprite):
                 if laser.current_image == 0:
                     self.player_death()
 
+    # Player death function
     def player_death(self):
         self.dead = True
         self.lose = True

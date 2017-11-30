@@ -1,6 +1,11 @@
 import pygame
 from player_class import *
 
+'''
+This File contains all the code, functions and classes for the
+different objects and tiles that appear in the random map.
+'''
+
 Vector2 = pygame.math.Vector2
 
 # can change between the available texture packs 1,2 and 3 respectively

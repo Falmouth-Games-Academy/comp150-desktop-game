@@ -4,6 +4,11 @@ import numpy
 from map_objects_and_tiles import *
 from screen_settings import *
 
+'''
+This file contains all the code and functions that generates a new random map when
+starting the game or by pressing the "M" button.
+'''
+
 Vector2 = pygame.math.Vector2
 map_image = pygame.Surface((screen_width, screen_height))
 
@@ -40,6 +45,9 @@ def generate_a_map():
             current_pos = (row_num, tile_num[0])
 
             # IF statement rules to apply to the map matrix
+            # These IF statements is what makes the random map look a certain way
+
+            # This IF statement creates wall all around the map
             if row_num == 0 or row_num == screen_height / 64 - 1 or tile_num[0] == 0 \
                     or tile_num[0] == screen_width / 64 - 1:
                 map_matrix.itemset(current_pos, 1)
@@ -87,8 +95,6 @@ def generate_a_map():
             player_tile = PlayerSpawnTile(pos_x, pos_y)
 
             # render all images made in map objects and tiles
-            # If statements that will
-
             if tile_num[1] == 1:
                 generate_a_map.wall_pos = (pos_x, pos_y)
                 wall = Wall(generate_a_map.wall_pos)

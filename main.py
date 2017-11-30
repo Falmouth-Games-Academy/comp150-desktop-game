@@ -4,6 +4,12 @@ from player_class import *
 from map_genreator import *
 import time
 
+'''
+This is the Main file, this calls all the other game objects and functions
+from the other python files to run the game.
+The game needs to be run through this file.
+'''
+
 # initiate pygame
 pygame.init()
 
@@ -11,7 +17,10 @@ pygame.init()
 FPS = 60
 fpsClock = pygame.time.Clock()
 
+# generate a new map on launch of the game
 generate_a_map()
+
+# initialising the player
 player = Player(generate_a_map.player_spawn_pos)
 
 toggle_state = False
@@ -19,6 +28,7 @@ toggle_state = False
 running = True
 time1 = 0.00
 
+# The main run loop
 while running:
     time2 = time1
     time1 = time.clock()
@@ -46,8 +56,6 @@ while running:
     else:
         render_map()
         render_lasers()
-
-    # running core gameplay elements
 
     player.render(screen)
     player.player_movement(wall_list, grav_well_list, laser_list, win_tile_list)
