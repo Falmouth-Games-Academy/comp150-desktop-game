@@ -34,3 +34,7 @@
 # JetBrains Rider
 .idea/
 *.sln.iml
+/FruitBats/HereBeDragons/player_sprite.bin
+# Saved Player Sprite
+player_sprite.bin
+/FruitBats/HereBeDragons/char_creation_index.txt
